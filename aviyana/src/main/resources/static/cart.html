@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Aviyana Divine</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="nav-brand">
+            <img src="images/divinelogo.jpeg" alt="Aviyana Divine" class="logo">
+            <div class="brand-text">
+                <h1>Aviyana Divine</h1>
+                <p>A Division of Aviyana Ventures Pvt. Ltd.</p>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <div class="search-box">
+                <input type="text" placeholder="Search services...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="signup.html" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+
+        <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<section class="page-header">
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <p>Review your spiritual items before checkout</p>
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> > <span>Services</span>
+        </nav>
+    </div>
+</section>
+
+<main class="main-content">
+<!--    <div class="container">-->
+<!--        <div class="breadcrumb">-->
+<!--            <a href="index.html">Home</a>-->
+<!--            <span>/</span>-->
+<!--            <span>Shopping Cart</span>-->
+<!--        </div>-->
+
+        <div class="cart-container">
+<!--            <div class="cart-header">-->
+<!--                <h1>Shopping Cart</h1>-->
+<!--                <p>Review your spiritual items before checkout</p>-->
+<!--            </div>-->
+
+            <div class="cart-content">
+                <div class="cart-items">
+                    <div class="cart-item" data-product-id="1">
+                        <div class="item-image">
+                            <img src="public/incense-sticks.jpg" alt="Premium Incense Sticks Set">
+                        </div>
+                        <div class="item-details">
+                            <h3>Premium Incense Sticks Set</h3>
+                            <p class="item-description">Handcrafted aromatic incense sticks for meditation and prayers</p>
+                            <div class="item-options">
+                                <span class="option">Fragrance: Sandalwood</span>
+                                <span class="option">Pack Size: 50 sticks</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="remove-item" onclick="removeFromCart(1)">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                                <button class="save-later">
+                                    <i class="fas fa-heart"></i> Save for Later
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <label>Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="updateQuantity(1, -1)">-</button>
+                                <input type="number" value="2" min="1" max="10" id="qty-1">
+                                <button class="qty-btn" onclick="updateQuantity(1, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="item-price">
+                            <span class="current-price">₹450</span>
+                            <span class="original-price">₹500</span>
+                            <span class="discount">10% off</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-item" data-product-id="2">
+                        <div class="item-image">
+                            <img src="public/rudraksha-beads.jpg" alt="Sacred Rudraksha Beads">
+                        </div>
+                        <div class="item-details">
+                            <h3>Sacred Rudraksha Beads</h3>
+                            <p class="item-description">Authentic 5-mukhi Rudraksha beads for spiritual protection</p>
+                            <div class="item-options">
+                                <span class="option">Size: 12mm</span>
+                                <span class="option">Origin: Nepal</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="remove-item" onclick="removeFromCart(2)">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                                <button class="save-later">
+                                    <i class="fas fa-heart"></i> Save for Later
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <label>Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="updateQuantity(2, -1)">-</button>
+                                <input type="number" value="1" min="1" max="10" id="qty-2">
+                                <button class="qty-btn" onclick="updateQuantity(2, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="item-price">
+                            <span class="current-price">₹299</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-item" data-product-id="3">
+                        <div class="item-image">
+                            <img src="public/meditation-cushion.png" alt="Meditation Cushion">
+                        </div>
+                        <div class="item-details">
+                            <h3>Meditation Cushion</h3>
+                            <p class="item-description">Comfortable zabuton cushion for extended meditation sessions</p>
+                            <div class="item-options">
+                                <span class="option">Color: Maroon</span>
+                                <span class="option">Material: Cotton</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="remove-item" onclick="removeFromCart(3)">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                                <button class="save-later">
+                                    <i class="fas fa-heart"></i> Save for Later
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <label>Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="updateQuantity(3, -1)">-</button>
+                                <input type="number" value="1" min="1" max="10" id="qty-3">
+                                <button class="qty-btn" onclick="updateQuantity(3, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="item-price">
+                            <span class="current-price">₹1,200</span>
+                            <span class="original-price">₹1,400</span>
+                            <span class="discount">15% off</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+
+                        <div class="summary-row">
+                            <span>Subtotal (4 items)</span>
+                            <span id="subtotal">₹1,949</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping">₹50</span>
+                        </div>
+
+                        <div class="summary-row discount-row">
+                            <span>Discount</span>
+                            <span id="discount">-₹249</span>
+                        </div>
+
+                        <div class="summary-row tax-row">
+                            <span>Tax (GST 18%)</span>
+                            <span id="tax">₹306</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="summary-row total-row">
+                            <span>Total</span>
+                            <span id="total">₹2,056</span>
+                        </div>
+
+                        <div class="promo-code">
+                            <input type="text" placeholder="Enter promo code" id="promoCode">
+                            <button onclick="applyPromoCode()">Apply</button>
+                        </div>
+
+                        <button class="checkout-btn" onclick="proceedToCheckout()">
+                            <i class="fas fa-lock"></i>
+                            Proceed to Checkout
+                        </button>
+
+                        <div class="payment-methods">
+                            <p>We accept:</p>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-paypal"></i>
+                                <i class="fas fa-university"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="delivery-info">
+                        <h4><i class="fas fa-truck"></i> Delivery Information</h4>
+                        <p>Free delivery on orders above ₹999</p>
+                        <p>Expected delivery: 3-5 business days</p>
+                        <p>Cash on delivery available</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saved-items" id="savedItems" style="display: none;">
+                <h3>Saved for Later</h3>
+                <div class="saved-items-list">
+                    Saved items will be populated here
+                </div>
+            </div>
+
+            <div class="recommended-products">
+                <h3>You might also like</h3>
+                <div class="recommended-grid">
+                    <div class="recommended-item">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Brass Oil Lamp">
+                        <h4>Brass Oil Lamp</h4>
+                        <p>₹350</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('lamp')">Add to Cart</button>
+                    </div>
+
+                    <div class="recommended-item">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Prayer Mala">
+                        <h4>108 Bead Prayer Mala</h4>
+                        <p>₹450</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('mala')">Add to Cart</button>
+                    </div>
+
+                    <div class="recommended-item">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Healing Crystals">
+                        <h4>Healing Crystal Set</h4>
+                        <p>₹800</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('crystals')">Add to Cart</button>
+                    </div>
+
+                    <div class="recommended-item">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Singing Bowl">
+                        <h4>Tibetan Singing Bowl</h4>
+                        <p>₹1,200</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('bowl')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Aviyana Divine</h3>
+                <p>India's first spiritual channel for common man by common man. Rejuvenation of mental, spiritual and physical well-being.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/p/Dr-Ravindra-Pratap-Gupta-100063541372506/" class="social-link facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ravindrapratapgupta9/" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+                    <a href="https://linkedin.com/in/ravindrapratapgupta" class="social-link youtube">
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+                    <a href="https://twitter.com/ravindra9" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>
+
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Service Categories</h4>
+                <ul>
+                    <li><a href="services.html?category=discourses">Religious Discourses</a></li>
+                    <li><a href="services.html?category=healing">Spiritual Healing</a></li>
+                    <li><a href="services.html?category=yoga">Yoga Sessions</a></li>
+                    <li><a href="services.html?category=guidance">Life Guidance</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-envelope"></i>Connect@aviyanaventures.com</p>
+                <p><i class="fas fa-phone"></i> +91 8779102007</p>
+                <p><i class="fas fa-map-marker-alt"></i>India:Head Office Navi Mumbai: Aviyana Divine (A division of Aviyana Ventures Pvt. Ltd.), Aviyana House-609, 608, 607, 606, Parth Solitaire Commercial Complex, Plot No-2, Sector-9E, Kalamboli, Near D-Mart, Navi Mumbai, Maharashtra-410218</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aviyana Divine - A Division of Aviyana Ventures Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+<script src="js/main.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

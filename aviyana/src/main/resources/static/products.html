@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Products - Aviyana Divine</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="nav-brand">
+            <img src="images/divinelogo.jpeg" alt="Aviyana Divine" class="logo">
+            <div class="brand-text">
+                <h1>Aviyana Divine</h1>
+                <p>A Division of Aviyana Ventures Pvt. Ltd.</p>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <div class="search-box">
+                <input type="text" placeholder="Search products..." id="productSearch">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="signup.html" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+
+        <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+<section class="page-header">
+    <div class="container">
+        <h1>Divine Products</h1>
+        <p>Authentic spiritual products made in India</p>
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> > <span>Products</span>
+        </nav>
+    </div>
+</section>
+
+<section class="filters-section">
+    <div class="container">
+        <div class="filters-header">
+            <h2>Browse Categories</h2>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+            </div>
+        </div>
+
+        <div class="filters-container">
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All Products</button>
+                <button class="filter-btn" data-category="mandir">Mandir</button>
+                <button class="filter-btn" data-category="incense">Incense & Dhoop</button>
+                <button class="filter-btn" data-category="pooja">Pooja Items</button>
+                <button class="filter-btn" data-category="lamps">Lamps & Diyas</button>
+                <button class="filter-btn" data-category="clothes">Divine Clothes</button>
+                <button class="filter-btn" data-category="accessories">Accessories</button>
+            </div>
+
+            <div class="sort-filter">
+                <select id="sortProducts">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name A-Z</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="container">
+        <div class="products-grid" id="productsGrid">
+            <div class="product-card" data-category="mandir">
+                <div class="product-image">
+                    <img src="images/mandir.jpeg" alt="Premium Wooden Mandir">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="mandir1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Wooden Mandir</h3>
+                    <p class="product-description">Handcrafted wooden temple for home worship</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(24 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹2,999</span>
+                        <span class="original-price">₹3,499</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="mandir">
+                <div class="product-image">
+                    <img src="images/marble.webp" alt="Marble Mandir">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="mandir2">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Marble Mandir</h3>
+                    <p class="product-description">Beautiful marble temple with intricate carvings</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹5,999</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+
+            <div class="product-card" data-category="incense">
+                <div class="product-image">
+                    <img src="images/sandlestick.png" alt="Sandalwood Incense Sticks">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="incense1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Sandalwood Incense Sticks</h3>
+                    <p class="product-description">Pure sandalwood fragrance for meditation</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(45 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹199</span>
+                        <span class="original-price">₹249</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="incense">
+                <div class="product-image">
+                    <img src="images/sandlestick.png" alt="Traditional Dhoop Sticks">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="dhoop1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Traditional Dhoop Sticks</h3>
+                    <p class="product-description">Aromatic dhoop for spiritual cleansing</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(32 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹149</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="pooja">
+                <div class="product-image">
+                    <img src="images/poojathali.webp" alt="Brass Pooja Thali Set">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="thali1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Brass Pooja Thali Set</h3>
+                    <p class="product-description">Complete brass thali set for worship</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(67 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹899</span>
+                        <span class="original-price">₹1,199</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="pooja">
+                <div class="product-image">
+                    <img src="images/kalash.jpg" alt="Copper Kalash">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="kalash1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Copper Kalash</h3>
+                    <p class="product-description">Sacred copper vessel for rituals</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(29 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹599</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+
+            <div class="product-card" data-category="lamps">
+                <div class="product-image">
+                    <img src="images/traditional.jpeg" alt="Traditional Diya Set">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="diya1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Traditional Diya Set</h3>
+                    <p class="product-description">Handmade clay diyas for festivals</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(89 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹299</span>
+                        <span class="original-price">₹399</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="lamps">
+                <div class="product-image">
+                    <img src="images/poojathali.webp" alt="Brass Oil Lamp">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="lamp1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Brass Oil Lamp</h3>
+                    <p class="product-description">Traditional brass deepak for daily worship</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(41 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹449</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+
+            <div class="product-card" data-category="clothes">
+                <div class="product-image">
+                    <img src="images/god-clothes.jpg" alt="Deity Silk Clothes">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="clothes1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Deity Silk Clothes</h3>
+                    <p class="product-description">Premium silk clothing for deities</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(23 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹799</span>
+                        <span class="original-price">₹999</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <img src="images/ghanta.jpg" alt="Brass Pooja Bell">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="bell1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Brass Pooja Bell</h3>
+                    <p class="product-description">Sacred bell for temple rituals</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(35 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹349</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <img src="images/chauki.jpg" alt="Wooden Pooja Chauki">
+                    <div class="product-overlay">
+                        <button class="btn-quick-view" data-product="chauki1">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>Wooden Pooja Chauki</h3>
+                    <p class="product-description">Handcrafted wooden platform for worship</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(52 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">₹699</span>
+                        <span class="original-price">₹899</span>
+                    </div>
+                    <button class="btn-add-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="load-more-section">
+            <button class="btn-load-more">Load More Products</button>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="quickViewModal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body">
+            <div class="product-image-large">
+                <img id="modalProductImage" src="/placeholder.svg" alt="">
+            </div>
+            <div class="product-details">
+                <h2 id="modalProductName"></h2>
+                <div class="product-rating" id="modalProductRating"></div>
+                <p id="modalProductDescription"></p>
+                <div class="product-price" id="modalProductPrice"></div>
+                <div class="quantity-selector">
+                    <label>Quantity:</label>
+                    <button class="qty-btn" onclick="changeQuantity(-1)">-</button>
+                    <input type="number" id="modalQuantity" value="1" min="1">
+                    <button class="qty-btn" onclick="changeQuantity(1)">+</button>
+                </div>
+                <button class="btn-add-cart-modal">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Aviyana Divine</h3>
+                <p>India's first spiritual channel for common man by common man. Rejuvenation of mental, spiritual and physical well-being.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/p/Dr-Ravindra-Pratap-Gupta-100063541372506/" class="social-link facebook">
+                        <i class="fab fa-facebook"></i>
+
+                    </a>
+                    <a href="https://www.instagram.com/ravindrapratapgupta9/" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+                    <a href="https://linkedin.com/in/ravindrapratapgupta" class="social-link youtube">
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+                    <a href="https://twitter.com/ravindra9" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>
+
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="products.html?category=mandir">Mandir</a></li>
+                    <li><a href="products.html?category=incense">Incense & Dhoop</a></li>
+                    <li><a href="products.html?category=pooja">Pooja Items</a></li>
+                    <li><a href="products.html?category=clothes">Divine Clothes</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-envelope"></i>Connect@aviyanaventures.com</p>
+                <p><i class="fas fa-phone"></i> +91 8779102007</p>
+                <p><i class="fas fa-map-marker-alt"></i>India:Head Office Navi Mumbai: Aviyana Divine (A division of Aviyana Ventures Pvt. Ltd.), Aviyana House-609, 608, 607, 606, Parth Solitaire Commercial Complex, Plot No-2, Sector-9E, Kalamboli, Near D-Mart, Navi Mumbai, Maharashtra-410218</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aviyana Divine - A Division of Aviyana Ventures Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/products.js"></script>
+</body>
+</html>
