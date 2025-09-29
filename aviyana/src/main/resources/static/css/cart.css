@@ -464,8 +464,7 @@
 
 
 .page-header {
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
-  color: white;
+ background: linear-gradient(135deg, #ffecd2, #fcb69f);
   padding: 3rem 0;
   text-align: center;
 }
@@ -475,22 +474,19 @@
   margin-bottom: 0.5rem;
 }
 
-.page-header p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
 
 .breadcrumb {
   margin-top: 1rem;
 }
 
 .breadcrumb a {
-  color: white;
+
   text-decoration: none;
   opacity: 0.8;
 }
 
 .breadcrumb a:hover {
+color: white;
   opacity: 1;
 }
 
