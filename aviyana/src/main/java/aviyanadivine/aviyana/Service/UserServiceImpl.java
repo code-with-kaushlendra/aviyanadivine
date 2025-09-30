@@ -18,10 +18,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public String createUser(User user) {
 
-    Optional<User> existinguser=userInfoRepository.findByUsername(user.getUsername());
-    if(existinguser.isPresent()){
-        return ("Username already exists");
-    }
         User user1=new User();
         BeanUtils.copyProperties(user,user1);
         userInfoRepository.save(user1);
@@ -29,17 +25,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String loginUser(User user) {
-        String username = user.getUsername();  // ✅ Fixed
-        String password = user.getPassword();
-
-        Optional<User> userFound = userInfoRepository.findByUsernameAndPassword(username, password);
-
-        if (userFound.isPresent()) {
-            return "Login Successful";
-        } else {
-            return "Invalid Credentials";
-        }
+    public boolean loginUser(User user) {
+        Optional<User> found=userInfoRepository.findByEmailAndPassword(user.getEmail(),user.getPassword());
+        return found.isPresent();
     }
+
+//    @Override
+//    public String loginUser(User user) {
+//        String username = user.getUsername();  // ✅ Fixed
+//        String password = user.getPassword();
+//
+//        Optional<User> userFound = userInfoRepository.findByUsernameAndPassword(username, password);
+//
+//        if (userFound.isPresent()) {
+//            return "Login Successful";
+//        } else {
+//            return "Invalid Credentials";
+//        }
+//    }
 
 }

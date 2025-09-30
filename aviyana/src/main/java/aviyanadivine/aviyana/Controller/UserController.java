@@ -4,6 +4,7 @@ package aviyanadivine.aviyana.Controller;
 import aviyanadivine.aviyana.Entity.User;
 import aviyanadivine.aviyana.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +26,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.loginUser(user);
+    public ResponseEntity<String> login(@RequestBody User user) {
+        boolean loginSuccess= userService.loginUser(user);
+        if(loginSuccess){
+            return ResponseEntity.ok("Login Successful");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+        }
     }
 
 }

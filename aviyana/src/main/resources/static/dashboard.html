@@ -11,9 +11,12 @@
 <body>
 <header class="header">
     <div class="container">
-        <div class="logo">
-            <h1>Aviyana Divine</h1>
-            <span>Divine Spiritual Solutions</span>
+        <div class="nav-brand">
+            <img src="images/divinelogo.jpeg" alt="Aviyana Divine" class="logo">
+            <div class="brand-text">
+                <h1>Aviyana Divine</h1>
+                <p>A Division of Aviyana Ventures Pvt. Ltd.</p>
+            </div>
         </div>
         <nav class="nav">
             <a href="index.html">Home</a>
@@ -22,7 +25,7 @@
             <a href="dashboard.html" class="active">Dashboard</a>
             <div class="user-menu">
                 <span class="user-name" id="userName">Welcome, User</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <button   id="logout-btn" onclick="logout()">Logout</button>
             </div>
         </nav>
     </div>
@@ -67,7 +70,6 @@
     </aside>
 
     <main class="main-content">
-        Overview Section
         <section id="overview" class="dashboard-section active">
             <div class="section-header">
                 <h2>Dashboard Overview</h2>
