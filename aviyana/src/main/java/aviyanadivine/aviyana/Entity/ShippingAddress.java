@@ -28,8 +28,12 @@ public class ShippingAddress {
         private String city;
         private String state;
         private String pincode;
-        private LocalDateTime updated_at;
         private LocalDateTime created_at;
+        @PrePersist
+        protected void onCreate() {
+                this.created_at = LocalDateTime.now();
+
+        }
 
         // Getters and Setters
     }

@@ -145,15 +145,31 @@ body: JSON.stringify({
 }
 
 function buyNow(productId) {
-  const quantity = 1; // You can change this to dynamic if needed
+  const userId = getCurrentUserId();
+  const quantity = 1;
+
+  if (!userId) {
+    alert("Please log in to proceed.");
+    window.location.href = "login.html";
+    return;
+  }
+
   const checkoutUrl = `checkout.html?productId=${productId}&quantity=${quantity}`;
   window.location.href = checkoutUrl;
 }
 
 
-function getCurrentUserId() {
-  return 1; // Replace with real logic
+
+function getCurrentUser() {
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : null;
 }
+
+function getCurrentUserId() {
+  const user = getCurrentUser();
+  return user ? user.id : null;
+}
+
 
 
 

@@ -168,6 +168,8 @@
 
 <!-- ✅ Add Dynamic Script for Order Summary -->
 <script>
+  let shippingSaved = false; // ✅ Track if user saved shipping address
+
   document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("productId");
@@ -214,7 +216,7 @@
     }
   });
 
-
+  // Save Shipping Address
   document.getElementById("addressForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -237,34 +239,35 @@
 
       if (response.ok) {
         alert("Shipping address saved successfully!");
-        // Optionally save in localStorage for next step
+
+        // Store in localStorage (optional)
         localStorage.setItem("shippingAddress", JSON.stringify(addressData));
+
+        // ✅ Mark that address is saved
+        shippingSaved = true;
       } else {
         alert("Failed to save address.");
+        shippingSaved = false;
       }
     } catch (err) {
       console.error(err);
       alert("Error connecting to server.");
+      shippingSaved = false;
     }
   });
 
+  // Proceed to Payment — Only if shippingSaved is true
   function proceedToCheckout() {
-  const address = localStorage.getItem("shippingAddress");
-  if (!address) {
-    alert("Please fill and save your shipping address before proceeding.");
-    return;
+    if (!shippingSaved) {
+      alert("Please fill and save your shipping address before proceeding.");
+      return;
+    }
+
+    const total = document.getElementById("checkoutTotal").textContent.replace("₹", "");
+    localStorage.setItem("orderTotal", total);
+
+    window.location.href = "payment.html";
   }
-
-  // Save total & order data
-  const total = document.getElementById("checkoutTotal").textContent.replace("₹", "");
-  localStorage.setItem("orderTotal", total);
-
-  // Redirect to payment page
-  window.location.href = "payment.html";
-}
-
-
-
 </script>
 
 </body>

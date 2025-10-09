@@ -1,12 +1,10 @@
 // Main JavaScript functionality for Aviyana Divine
 
-// Global variables
-const cart = JSON.parse(localStorage.getItem("cart")) || []
+// Global variable for user
 let user = JSON.parse(localStorage.getItem("user")) || null
 
 // DOM Content Loaded
 document.addEventListener("DOMContentLoaded", () => {
-  updateCartCount()
   updateAuthButtons()
   initializeEventListeners()
 })
@@ -23,20 +21,27 @@ function initializeEventListeners() {
     })
   }
 
-  // Add to cart buttons
-  const addToCartButtons = document.querySelectorAll(".btn-add-cart")
-  addToCartButtons.forEach((button) => {
+  // Buy Now buttons
+  const buyNowButtons = document.querySelectorAll(".btn-add-cart")
+  buyNowButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault()
       const productCard = this.closest(".product-card")
       const product = {
-        id: Date.now(),
         name: productCard.querySelector("h3").textContent,
         price: productCard.querySelector(".price").textContent,
-        image: productCard.querySelector("img").src,
-        quantity: 1,
+        image: productCard.querySelector("img").src
       }
-      addToCart(product)
+
+      // If user is not logged in, redirect to login
+      if (!user) {
+        window.location.href = "login.html"
+        return
+      }
+
+      // Redirect to checkout page with product info (could use sessionStorage or URL params)
+      sessionStorage.setItem("selectedProduct", JSON.stringify(product))
+      window.location.href = "checkout.html"
     })
   })
 
@@ -57,37 +62,14 @@ function initializeEventListeners() {
   }
 }
 
-// Cart functionality
-function addToCart(product) {
-  const existingProduct = cart.find((item) => item.name === product.name)
-
-  if (existingProduct) {
-    existingProduct.quantity += 1
-  } else {
-    cart.push(product)
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart))
-  updateCartCount()
-  showNotification("Product added to cart!")
-}
-
-function updateCartCount() {
-  const cartCount = document.querySelector(".cart-count")
-  if (cartCount) {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
-    cartCount.textContent = totalItems
-  }
-}
-
 // Authentication functions
 function updateAuthButtons() {
   const authButtons = document.querySelector(".auth-buttons")
   if (authButtons && user) {
     authButtons.innerHTML = `
-            <a href="dashboard.html" class="btn-login">Dashboard</a>
-            <button onclick="logout()" class="btn-signup">Logout</button>
-        `
+
+      <button onclick="logout()" class="btn-signup">Logout</button>
+    `
   }
 }
 
@@ -114,16 +96,16 @@ function showNotification(message, type = "success") {
   notification.textContent = message
 
   notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === "success" ? "#4CAF50" : "#f44336"};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 5px;
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-    `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === "success" ? "#4CAF50" : "#f44336"};
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+  `
 
   document.body.appendChild(notification)
 
@@ -191,15 +173,15 @@ if ("IntersectionObserver" in window) {
 // Add CSS animation keyframes
 const style = document.createElement("style")
 style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
     }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
 `
 document.head.appendChild(style)
