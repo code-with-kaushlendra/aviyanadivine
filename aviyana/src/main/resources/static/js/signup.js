@@ -8,10 +8,10 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     const phone = document.getElementById("phone").value.trim();
     const password = document.getElementById("password").value;
     const confirmpassword = document.getElementById("confirmPassword").value;
-    const role = document.getElementById("userType").value;
+
 
     // Basic validation
-    if (!firstname || !lastname || !email || !phone || !password || !confirmpassword || !role) {
+    if (!firstname || !lastname || !email || !phone || !password || !confirmpassword) {
         alert("Please fill out all fields.");
         return;
     }
@@ -26,9 +26,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         lastname,
         email,
         phone,
-        password,
-        confirmpassword,
-        role
+        password
     };
 
     try {
@@ -38,7 +36,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             body: JSON.stringify(user)
         });
 
-        const result = await response.text();
+        const result = await response.json();
 
         if (response.ok) {
             alert("Signup successful!");

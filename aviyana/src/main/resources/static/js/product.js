@@ -1,262 +1,161 @@
-// Products page specific JavaScript
+// js/products.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  initializeProductsPage()
+  const productsGrid = document.getElementById("productsGrid");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  let allProducts = [];
+
+  // Listen for Add to Cart buttons
+  productsGrid.addEventListener('click', (e) => {
+if (e.target.classList.contains('btn-buy-now')) {
+  const productId = e.target.getAttribute('data-product-id');
+  buyNow(productId);
+}
+
+  });
+
+  // Fetch data from backend API
+  fetch("http://localhost:8080/api/products")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      return response.json();
+    })
+    .then(data => {
+      allProducts = data;
+      renderProducts(allProducts);
+    })
+    .catch(error => {
+      console.error("Error fetching products:", error);
+      productsGrid.innerHTML = `<p class="error">Unable to load products at this time.</p>`;
+    });
+
+  // Render products to grid
+  function renderProducts(products) {
+    productsGrid.innerHTML = "";
+
+    if (!products || products.length === 0) {
+      productsGrid.innerHTML = "<p>No products found.</p>";
+      return;
+    }
+
+    products.forEach(product => {
+      const category = product.category ? product.category.toLowerCase() : "general";
+
+      const productCard = document.createElement("div");
+      productCard.classList.add("product-card");
+      productCard.setAttribute("data-category", category);
+
+      productCard.innerHTML = `
+        <div class="product-image">
+          <img src="${product.imageUrl || 'https://via.placeholder.com/300x300.png?text=No+Image'}" alt="${product.name || 'No Name'}">
+          <div class="product-overlay">
+            <button class="btn-quick-view" data-product-id="${product.id}">Quick View</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3>${product.name || 'Unnamed Product'}</h3>
+          <p class="product-description">${product.description || 'No description available.'}</p>
+          <div class="product-rating">
+            ${generateStars(product.rating || 5)}
+            <span>(${product.reviews || 0} reviews)</span>
+          </div>
+          <div class="product-price">
+            <span class="current-price">₹${product.price || 0}</span>
+            ${product.originalPrice ? `<span class="original-price">₹${product.originalPrice}</span>` : ""}
+          </div>
+       <button class="btn-buy-now" data-product-id="${product.id}">Buy Now</button>
+
+
+        </div>
+      `;
+
+      productsGrid.appendChild(productCard);
+    });
+  }
+
+  // Star Rating Helper
+  function generateStars(rating) {
+    let stars = "";
+    for (let i = 1; i <= 5; i++) {
+      stars += i <= rating
+        ? `<i class="fas fa-star"></i>`
+        : `<i class="far fa-star"></i>`;
+    }
+    return stars;
+  }
+
+  // Filter by category
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const category = button.getAttribute("data-category");
+
+      // UI: Toggle active button
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const filtered = category === "all"
+        ? allProducts
+        : allProducts.filter(p => (p.category || '').toLowerCase() === category);
+
+      renderProducts(filtered);
+    });
+  });
+});
+
+
+
+// Add to Cart Function
+function addToCart(productId, quantity = 1) {
+  const userId = getCurrentUserId(); // This function should return the logged-in user's ID
+
+  if (!userId) {
+    alert("User not logged in.");
+    return;
+  }
+
+
+  fetch('http://localhost:8080/api/cart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+body: JSON.stringify({
+  userId: userId,
+  productId: productId,
+  quantity: quantity
 })
 
-function initializeProductsPage() {
-  initializeFilters()
-  initializeViewToggle()
-  initializeQuickView()
-  initializeSort()
-  initializeLoadMore()
-  handleURLParams()
-}
-
-// Filter functionality
-function initializeFilters() {
-  const filterButtons = document.querySelectorAll(".filter-btn")
-  const productCards = document.querySelectorAll(".product-card")
-
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      // Remove active class from all buttons
-      filterButtons.forEach((btn) => btn.classList.remove("active"))
-      // Add active class to clicked button
-      this.classList.add("active")
-
-      const category = this.dataset.category
-      filterProducts(category, productCards)
-    })
   })
-}
-
-function filterProducts(category, productCards) {
-  productCards.forEach((card) => {
-    if (category === "all" || card.dataset.category === category) {
-      card.style.display = "block"
-      card.style.animation = "fadeIn 0.5s ease"
-    } else {
-      card.style.display = "none"
-    }
-  })
-}
-
-// View toggle functionality
-function initializeViewToggle() {
-  const viewButtons = document.querySelectorAll(".view-btn")
-  const productsGrid = document.getElementById("productsGrid")
-
-  viewButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      viewButtons.forEach((btn) => btn.classList.remove("active"))
-      this.classList.add("active")
-
-      const view = this.dataset.view
-      if (view === "list") {
-        productsGrid.classList.add("list-view")
-      } else {
-        productsGrid.classList.remove("list-view")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
       }
+      return response.json();
     })
-  })
-}
-
-// Quick view modal functionality
-function initializeQuickView() {
-  const quickViewButtons = document.querySelectorAll(".btn-quick-view")
-  const modal = document.getElementById("quickViewModal")
-  const closeBtn = document.querySelector(".close")
-
-  quickViewButtons.forEach((button) => {
-    button.addEventListener("click", function (e) {
-      e.stopPropagation()
-      const productId = this.dataset.product
-      openQuickView(productId)
+    .then(data => {
+      alert('Product added to cart successfully!');
+      updateCartCount();
     })
-  })
-
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none"
-  })
-
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none"
-    }
-  })
+    .catch(error => {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add product to cart.');
+    });
 }
 
-function openQuickView(productId) {
-  const modal = document.getElementById("quickViewModal")
-  const productData = getProductData(productId)
-
-  if (productData) {
-    document.getElementById("modalProductImage").src = productData.image
-    document.getElementById("modalProductName").textContent = productData.name
-    document.getElementById("modalProductDescription").textContent = productData.description
-    document.getElementById("modalProductPrice").innerHTML = productData.price
-    document.getElementById("modalProductRating").innerHTML = productData.rating
-
-    modal.style.display = "block"
-  }
+function buyNow(productId) {
+  const quantity = 1; // You can change this to dynamic if needed
+  const checkoutUrl = `checkout.html?productId=${productId}&quantity=${quantity}`;
+  window.location.href = checkoutUrl;
 }
 
-function getProductData(productId) {
-  // Mock product data - in real implementation, this would come from API
-  const products = {
-    mandir1: {
-      name: "Premium Wooden Mandir",
-      description: "Handcrafted wooden temple for home worship with intricate carvings and premium finish.",
-      price: '<span class="current-price">₹2,999</span><span class="original-price">₹3,499</span>',
-      rating:
-        '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(24 reviews)</span>',
-      image: "images/mandir1.jpg",
-    },
-    incense1: {
-      name: "Sandalwood Incense Sticks",
-      description: "Pure sandalwood fragrance for meditation and spiritual practices.",
-      price: '<span class="current-price">₹199</span><span class="original-price">₹249</span>',
-      rating:
-        '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(45 reviews)</span>',
-      image: "images/incense1.jpg",
-    },
-    // Add more products as needed
-  }
 
-  return products[productId]
+function getCurrentUserId() {
+  return 1; // Replace with real logic
 }
 
-// Quantity change functionality
-function changeQuantity(change) {
-  const quantityInput = document.getElementById("modalQuantity")
-  const currentValue = Number.parseInt(quantityInput.value)
-  const newValue = currentValue + change
 
-  if (newValue >= 1) {
-    quantityInput.value = newValue
-  }
-}
 
-// Sort functionality
-function initializeSort() {
-  const sortSelect = document.getElementById("sortProducts")
 
-  sortSelect.addEventListener("change", function () {
-    const sortBy = this.value
-    sortProducts(sortBy)
-  })
-}
 
-function sortProducts(sortBy) {
-  const productsGrid = document.getElementById("productsGrid")
-  const productCards = Array.from(productsGrid.querySelectorAll(".product-card"))
-
-  productCards.sort((a, b) => {
-    switch (sortBy) {
-      case "price-low":
-        return getPrice(a) - getPrice(b)
-      case "price-high":
-        return getPrice(b) - getPrice(a)
-      case "name":
-        return getName(a).localeCompare(getName(b))
-      case "newest":
-        // Mock newest sort - in real implementation, use actual dates
-        return Math.random() - 0.5
-      default:
-        return 0
-    }
-  })
-
-  // Re-append sorted cards
-  productCards.forEach((card) => productsGrid.appendChild(card))
-}
-
-function getPrice(productCard) {
-  const priceText = productCard.querySelector(".current-price").textContent
-  return Number.parseInt(priceText.replace(/[^\d]/g, ""))
-}
-
-function getName(productCard) {
-  return productCard.querySelector("h3").textContent
-}
-
-// Load more functionality
-function initializeLoadMore() {
-  const loadMoreBtn = document.querySelector(".btn-load-more")
-
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener("click", () => {
-      loadMoreProducts()
-    })
-  }
-}
-
-function loadMoreProducts() {
-  // Mock load more functionality
-  showNotification("Loading more products...", "info")
-
-  setTimeout(() => {
-    showNotification("All products loaded!", "success")
-    document.querySelector(".btn-load-more").style.display = "none"
-  }, 1000)
-}
-
-// Handle URL parameters
-function handleURLParams() {
-  const urlParams = new URLSearchParams(window.location.search)
-  const category = urlParams.get("category")
-  const search = urlParams.get("search")
-
-  if (category) {
-    const filterBtn = document.querySelector(`[data-category="${category}"]`)
-    if (filterBtn) {
-      filterBtn.click()
-    }
-  }
-
-  if (search) {
-    const searchInput = document.getElementById("productSearch")
-    if (searchInput) {
-      searchInput.value = search
-      performProductSearch(search)
-    }
-  }
-}
-
-function performProductSearch(query) {
-  const productCards = document.querySelectorAll(".product-card")
-  const searchTerm = query.toLowerCase()
-
-  productCards.forEach((card) => {
-    const productName = card.querySelector("h3").textContent.toLowerCase()
-    const productDescription = card.querySelector(".product-description").textContent.toLowerCase()
-
-    if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
-      card.style.display = "block"
-    } else {
-      card.style.display = "none"
-    }
-  })
-}
-
-// Add CSS animations
-const style = document.createElement("style")
-style.textContent = `
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`
-document.head.appendChild(style)
-
-function showNotification(message, type) {
-  // Mock notification function
-  console.log(`Notification: ${message} (Type: ${type})`)
-}

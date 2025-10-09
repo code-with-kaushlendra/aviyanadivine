@@ -36,7 +36,7 @@
             </div>
             <a href="cart.html" class="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
+                <span class="cart-count" id="cartCount">0</span>
             </a>
             <div class="auth-buttons">
                 <a href="login.html" class="btn-login">Login</a>
@@ -134,9 +134,9 @@
                         <div class="item-quantity">
                             <label>Quantity:</label>
                             <div class="quantity-controls">
-                                <button class="qty-btn" onclick="updateQuantity(2, -1)">-</button>
-                                <input type="number" value="1" min="1" max="10" id="qty-2">
-                                <button class="qty-btn" onclick="updateQuantity(2, 1)">+</button>
+                                <button class="qty-btn" onclick="updateQuantity(1, -1)">-</button>
+                                <input type="number" value="2" min="1" max="10" id="qty-1">
+                                <button class="qty-btn" onclick="updateQuantity(1, 1)">+</button>
                             </div>
                         </div>
                         <div class="item-price">
@@ -266,7 +266,7 @@
                     </div>
 
                     <div class="recommended-item">
-                        <img src="/placeholder.svg?height=150&width=150" alt="Healing Crystals">
+                        <img src="/images?height=150&width=150" alt="Healing Crystals">
                         <h4>Healing Crystal Set</h4>
                         <p>₹800</p>
                         <button class="add-to-cart-btn" onclick="addToCart('crystals')">Add to Cart</button>

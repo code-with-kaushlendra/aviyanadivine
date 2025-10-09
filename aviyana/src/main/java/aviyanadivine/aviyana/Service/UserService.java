@@ -6,4 +6,6 @@ public interface UserService {
     String createUser(User user);
 
     boolean loginUser(User user);
+
+    Object getUserRole(String email);
 }

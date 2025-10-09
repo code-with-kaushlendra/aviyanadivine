@@ -16,15 +16,19 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         body: JSON.stringify(user)
     });
 
-    const result = await res.text();
+    const result = await res.json();
 
     if (res.ok) {
         alert("Login successful");
         localStorage.setItem("user", JSON.stringify(result)); // optional: store user info
 
-
-        window.location.href = "dashboard.html";
+            // Redirect based on is_admin flag
+                    if (result.is_admin === 1) {
+                        window.location.href = "dashboard.html"; // Admin page
+                    } else {
+                        window.location.href = "products.html"; // User page
+                    }
     } else {
-        alert("Login failed: " + result);
+         alert("Something went wrong during login. Please try again.");
     }
 });

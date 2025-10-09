@@ -856,3 +856,4 @@ input:checked + .slider:before {
     grid-template-columns: 1fr;
   }
 }
+

@@ -1,316 +1,136 @@
-// Cart functionality
-document.addEventListener("DOMContentLoaded", () => {
-  initializeCart()
-  updateCartDisplay()
-  setupCartEventListeners()
-})
+// cart.js
 
-// Cart data structure
-let cartData = {
-  items: [
-    {
-      id: 1,
-      name: "Premium Incense Sticks Set",
-      description: "Handcrafted aromatic incense sticks for meditation and prayers",
-      price: 450,
-      originalPrice: 500,
-      quantity: 2,
-      image: "public/incense-sticks.jpg",
-      options: {
-        fragrance: "Sandalwood",
-        packSize: "50 sticks",
-      },
-    },
-    {
-      id: 2,
-      name: "Sacred Rudraksha Beads",
-      description: "Authentic 5-mukhi Rudraksha beads for spiritual protection",
-      price: 299,
-      quantity: 1,
-      image: "public/rudraksha-beads.jpg",
-      options: {
-        size: "12mm",
-        origin: "Nepal",
-      },
-    },
-    {
-      id: 3,
-      name: "Meditation Cushion",
-      description: "Comfortable zabuton cushion for extended meditation sessions",
-      price: 1200,
-      originalPrice: 1400,
-      quantity: 1,
-      image: "public/meditation-cushion.png",
-      options: {
-        color: "Maroon",
-        material: "Cotton",
-      },
-    },
-  ],
-  savedItems: [],
-}
+// Key under which you store cart in localStorage
+const CART_KEY = "myCart";  // you may choose "cart" or "user_cart"
 
-function initializeCart() {
-  // Load cart data from localStorage if available
-  const savedCart = localStorage.getItem("cartData")
-  if (savedCart) {
-    cartData = JSON.parse(savedCart)
-  }
-
-  console.log("[v0] Cart initialized with items:", cartData.items.length)
-}
-
-function updateCartDisplay() {
-  updateCartCount()
-  updateCartSummary()
-  displaySavedItems()
-}
-
-function updateCartCount() {
-  const totalItems = cartData.items.reduce((sum, item) => sum + item.quantity, 0)
-  const cartCountElement = document.getElementById("cartCount")
-  if (cartCountElement) {
-    cartCountElement.textContent = totalItems
-  }
-}
-
-function updateCartSummary() {
-  const subtotal = cartData.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const originalTotal = cartData.items.reduce((sum, item) => {
-    const originalPrice = item.originalPrice || item.price
-    return sum + originalPrice * item.quantity
-  }, 0)
-
-  const discount = originalTotal - subtotal
-  const shipping = subtotal > 999 ? 0 : 50
-  const tax = Math.round(subtotal * 0.18)
-  const total = subtotal + shipping + tax
-
-  // Update summary elements
-  updateElement("subtotal", `₹${subtotal.toLocaleString()}`)
-  updateElement("shipping", shipping === 0 ? "Free" : `₹${shipping}`)
-  updateElement("discount", discount > 0 ? `-₹${discount.toLocaleString()}` : "₹0")
-  updateElement("tax", `₹${tax.toLocaleString()}`)
-  updateElement("total", `₹${total.toLocaleString()}`)
-
-  console.log("[v0] Cart summary updated:", { subtotal, shipping, tax, total })
-}
-
-function updateElement(id, value) {
-  const element = document.getElementById(id)
-  if (element) {
-    element.textContent = value
-  }
-}
-
-function updateQuantity(productId, change) {
-  const item = cartData.items.find((item) => item.id === productId)
-  if (item) {
-    const newQuantity = item.quantity + change
-    if (newQuantity > 0 && newQuantity <= 10) {
-      item.quantity = newQuantity
-
-      // Update input field
-      const qtyInput = document.getElementById(`qty-${productId}`)
-      if (qtyInput) {
-        qtyInput.value = newQuantity
-      }
-
-      updateCartDisplay()
-      saveCartData()
-      showNotification(`Quantity updated to ${newQuantity}`, "success")
+// Utility: fetch cart state (object: productId → {productData, quantity})
+function getCartState() {
+    const cartJson = localStorage.getItem(CART_KEY);
+    if (!cartJson) return {};
+    try {
+        return JSON.parse(cartJson);
+    } catch (e) {
+        console.error("Invalid cart JSON", e);
+        return {};
     }
-  }
 }
 
+// Utility: save cart state
+function saveCartState(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+// Call this when “Add to Cart” is clicked on products page
+function addToCart(product) {
+    // product should be object like { id, name, price, imageUrl, ... }
+    const cart = getCartState();
+    if (!cart[product.id]) {
+        cart[product.id] = { product: product, quantity: 1 };
+    } else {
+        cart[product.id].quantity += 1;
+    }
+    saveCartState(cart);
+    // optionally update cart count indicator
+    updateCartCount();
+}
+
+// Remove from cart
 function removeFromCart(productId) {
-  const itemIndex = cartData.items.findIndex((item) => item.id === productId)
-  if (itemIndex > -1) {
-    const item = cartData.items[itemIndex]
-
-    if (confirm(`Remove "${item.name}" from cart?`)) {
-      cartData.items.splice(itemIndex, 1)
-
-      // Remove item element from DOM
-      const itemElement = document.querySelector(`[data-product-id="${productId}"]`)
-      if (itemElement) {
-        itemElement.remove()
-      }
-
-      updateCartDisplay()
-      saveCartData()
-      showNotification("Item removed from cart", "success")
-
-      // Redirect to products page if cart is empty
-      if (cartData.items.length === 0) {
-        setTimeout(() => {
-          window.location.href = "products.html"
-        }, 2000)
-      }
+    const cart = getCartState();
+    if (cart[productId]) {
+        delete cart[productId];
+        saveCartState(cart);
+        renderCartItems();
     }
-  }
 }
 
-function saveForLater(productId) {
-  const itemIndex = cartData.items.findIndex((item) => item.id === productId)
-  if (itemIndex > -1) {
-    const item = cartData.items.splice(itemIndex, 1)[0]
-    cartData.savedItems.push(item)
+// Update quantity by delta (can be +1 or –1)
+function updateQuantity(productId, delta) {
+    const cart = getCartState();
+    if (cart[productId]) {
+        cart[productId].quantity = Math.max(1, cart[productId].quantity + delta);
+        saveCartState(cart);
+        renderCartItems();
+    }
+}
 
-    // Remove item element from DOM
-    const itemElement = document.querySelector(`[data-product-id="${productId}"]`)
-    if (itemElement) {
-      itemElement.remove()
+// Render the cart items in DOM
+function renderCartItems() {
+    const cart = getCartState();
+    const cartItemsContainer = document.querySelector(".cart-items");
+    cartItemsContainer.innerHTML = "";  // clear old contents
+
+    let subtotal = 0;
+    let totalItems = 0;
+
+    for (const pid in cart) {
+        const entry = cart[pid];
+        const prod = entry.product;
+        const qty = entry.quantity;
+        totalItems += qty;
+
+        // Create the HTML for this item (you can use template strings)
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+        itemDiv.setAttribute("data-product-id", pid);
+
+        itemDiv.innerHTML = `
+          <div class="item-image">
+            <img src="${prod.imageUrl}" alt="${prod.name}">
+          </div>
+          <div class="item-details">
+            <h3>${prod.name}</h3>
+            <p class="item-description">${prod.description || ""}</p>
+            <div class="item-options">
+              ${prod.options ? prod.options.map(opt => `<span class="option">${opt}</span>`).join("") : ""}
+            </div>
+            <div class="item-actions">
+              <button class="remove-item" onclick="removeFromCart('${pid}')">
+                <i class="fas fa-trash"></i> Remove
+              </button>
+            </div>
+          </div>
+          <div class="item-quantity">
+            <label>Quantity:</label>
+            <div class="quantity-controls">
+              <button class="qty-btn" onclick="updateQuantity('${pid}', -1)">-</button>
+              <input type="number" value="${qty}" min="1" id="qty-${pid}">
+              <button class="qty-btn" onclick="updateQuantity('${pid}', 1)">+</button>
+            </div>
+          </div>
+          <div class="item-price">
+            <span class="current-price">₹${(prod.price * qty).toFixed(2)}</span>
+          </div>
+        `;
+
+        cartItemsContainer.appendChild(itemDiv);
+
+        subtotal += prod.price * qty;
     }
 
-    updateCartDisplay()
-    saveCartData()
-    showNotification("Item saved for later", "info")
-  }
+    // Update summary area
+    document.getElementById("subtotal").innerText = `₹${subtotal.toFixed(2)}`;
+    // shipping, discount, tax logic you can insert
+    const shipping = subtotal > 0 ? 50 : 0;
+    document.getElementById("shipping").innerText = `₹${shipping.toFixed(2)}`;
+    const discount = 0;  // logic to compute discount if any
+    document.getElementById("discount").innerText = `-₹${discount.toFixed(2)}`;
+    const tax = (subtotal * 0.18);
+    document.getElementById("tax").innerText = `₹${tax.toFixed(2)}`;
+    const total = subtotal + shipping + tax - discount;
+    document.getElementById("total").innerText = `₹${total.toFixed(2)}`;
+
+    // update cart count display somewhere
+    const cartCountElem = document.getElementById("cartCount");
+    if (cartCountElem) cartCountElem.innerText = totalItems;
 }
 
-function displaySavedItems() {
-  const savedItemsSection = document.getElementById("savedItems")
-  const savedItemsList = document.querySelector(".saved-items-list")
+// On page load, render cart items
+window.addEventListener("DOMContentLoaded", () => {
+    renderCartItems();
+});
 
-  if (cartData.savedItems.length > 0) {
-    savedItemsSection.style.display = "block"
-
-    if (savedItemsList) {
-      savedItemsList.innerHTML = cartData.savedItems
-        .map(
-          (item) => `
-                <div class="saved-item" data-product-id="${item.id}">
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="saved-item-details">
-                        <h4>${item.name}</h4>
-                        <p>₹${item.price}</p>
-                    </div>
-                    <div class="saved-item-actions">
-                        <button onclick="moveToCart(${item.id})">Move to Cart</button>
-                        <button onclick="removeSavedItem(${item.id})">Remove</button>
-                    </div>
-                </div>
-            `,
-        )
-        .join("")
-    }
-  } else {
-    savedItemsSection.style.display = "none"
-  }
-}
-
-function moveToCart(productId) {
-  const itemIndex = cartData.savedItems.findIndex((item) => item.id === productId)
-  if (itemIndex > -1) {
-    const item = cartData.savedItems.splice(itemIndex, 1)[0]
-    cartData.items.push(item)
-
-    updateCartDisplay()
-    saveCartData()
-    showNotification("Item moved to cart", "success")
-
-    // Refresh page to show updated cart
-    location.reload()
-  }
-}
-
-function removeSavedItem(productId) {
-  const itemIndex = cartData.savedItems.findIndex((item) => item.id === productId)
-  if (itemIndex > -1) {
-    cartData.savedItems.splice(itemIndex, 1)
-    displaySavedItems()
-    saveCartData()
-    showNotification("Saved item removed", "success")
-  }
-}
-
-function applyPromoCode() {
-  const promoCode = document.getElementById("promoCode").value.trim().toUpperCase()
-
-  if (!promoCode) {
-    showNotification("Please enter a promo code", "warning")
-    return
-  }
-
-  // Simulate promo code validation
-  const validCodes = {
-    DIVINE10: 10,
-    SPIRITUAL15: 15,
-    NEWUSER20: 20,
-    WELCOME25: 25,
-  }
-
-  if (validCodes[promoCode]) {
-    const discountPercent = validCodes[promoCode]
-    showNotification(`Promo code applied! ${discountPercent}% discount`, "success")
-
-    // Apply discount logic here
-    console.log("[v0] Promo code applied:", promoCode, discountPercent + "%")
-  } else {
-    showNotification("Invalid promo code", "error")
-  }
-}
-
-function addToCart(productType) {
-  // Simulate adding recommended products to cart
-  const products = {
-    lamp: { name: "Brass Oil Lamp", price: 350 },
-    mala: { name: "108 Bead Prayer Mala", price: 450 },
-    crystals: { name: "Healing Crystal Set", price: 800 },
-    bowl: { name: "Tibetan Singing Bowl", price: 1200 },
-  }
-
-  const product = products[productType]
-  if (product) {
-    showNotification(`${product.name} added to cart!`, "success")
-    console.log("[v0] Added to cart:", product)
-  }
-}
-
-function proceedToCheckout() {
-  if (cartData.items.length === 0) {
-    showNotification("Your cart is empty", "warning")
-    return
-  }
-
-  // Save cart data before checkout
-  saveCartData()
-
-  // Redirect to checkout page
-  window.location.href = "checkout.html"
-}
-
-function saveCartData() {
-  localStorage.setItem("cartData", JSON.stringify(cartData))
-}
-
-function setupCartEventListeners() {
-    // Quantity input change listeners
-    document.querySelectorAll('[id^="qty-"]').forEach(input => {
-        input.addEventListener('change', function() {
-            const productId = Number.parseInt(this.id.split('-')[1]);
-            const newQuantity = Number.parseInt(this.value);
-
-            if (newQuantity > 0 && newQuantity <= 10) {
-                const item = cartData.items.find(item => item.id === productId);
-                if (item) {
-                    item.quantity = newQuantity;
-                    updateCartDisplay();
-                    saveCartData();
-                }
-            } else {
-                // Reset to previous value
-                const item = cartData.items.find(item => item.id === productId);
-                if (item) {
-                    this.value = item.quantity;
-                }
-                showNotification('Quantity must be between 1 and 10', 'warning');
-            }
-        });
-    });
-
-    // Save for later buttons
-    document.querySelectorAll('.save-later').forEach(button => {
-        button.addEventListener('click', function() {
-            const cartItem = this.closest('.cart-item');
+// Expose functions globally (so onclick in HTML can call them)
+window.removeFromCart = removeFromCart;
+window.updateQuantity = updateQuantity;
+window.addToCart = addToCart;

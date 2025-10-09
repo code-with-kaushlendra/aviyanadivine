@@ -18,15 +18,18 @@
                 <p>A Division of Aviyana Ventures Pvt. Ltd.</p>
             </div>
         </div>
-        <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="services.html">Services</a>
-            <a href="dashboard.html" class="active">Dashboard</a>
-            <div class="user-menu">
-                <span class="user-name" id="userName">Welcome, User</span>
-                <button   id="logout-btn" onclick="logout()">Logout</button>
-            </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <div class="user-menu">
+                    <span class="user-name" id="userName"></span>
+                    <button   id="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </ul>
+
         </nav>
     </div>
 </header>
@@ -44,7 +47,7 @@
             </a>
             <a href="#orders" class="menu-item" onclick="showSection('orders')">
                 <i class="fas fa-shopping-bag"></i>
-                <span>My Orders</span>
+                <span>My Products</span>
             </a>
             <a href="#bookings" class="menu-item" onclick="showSection('bookings')">
                 <i class="fas fa-calendar"></i>
@@ -151,7 +154,7 @@
 
             <div class="profile-form">
                 <div class="profile-avatar">
-                    <img src="/placeholder.svg?height=120&width=120" alt="Profile Picture" id="profileImage">
+                    <img src="/images/ourmethodology.jpg?height=120&width=120" alt="Profile Picture" id="profileImage">
                     <button class="change-avatar-btn">Change Photo</button>
                     <input type="file" id="avatarInput" accept="image/*" style="display: none;">
                 </div>
@@ -202,47 +205,48 @@
 
         <section id="orders" class="dashboard-section">
             <div class="section-header">
-                <h2>My Orders</h2>
+                <h2>My Products</h2>
                 <p>Track your spiritual product orders</p>
             </div>
+            <div id="products-container"></div> <!-- products from backend will load here -->
 
-            <div class="orders-list">
-                <div class="order-card">
-                    <div class="order-header">
-                        <span class="order-id">#12345</span>
-                        <span class="order-status delivered">Delivered</span>
-                    </div>
-                    <div class="order-items">
-                        <img src="/placeholder.svg?height=60&width=60" alt="Product">
-                        <div class="item-details">
-                            <h4>Premium Incense Sticks Set</h4>
-                            <p>Quantity: 2 | Price: ₹450</p>
-                        </div>
-                    </div>
-                    <div class="order-footer">
-                        <span class="order-date">Ordered on: 15 Jan 2024</span>
-                        <button class="reorder-btn">Reorder</button>
-                    </div>
-                </div>
+<!--            <div class="orders-list">-->
+<!--                <div class="order-card">-->
+<!--                    <div class="order-header">-->
+<!--                        <span class="order-id">#12345</span>-->
+<!--                        <span class="order-status delivered">Delivered</span>-->
+<!--                    </div>-->
+<!--                    <div class="order-items">-->
+<!--                        <img src="/placeholder.svg?height=60&width=60" alt="Product">-->
+<!--                        <div class="item-details">-->
+<!--                            <h4>Premium Incense Sticks Set</h4>-->
+<!--                            <p>Quantity: 2 | Price: ₹450</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="order-footer">-->
+<!--                        <span class="order-date">Ordered on: 15 Jan 2024</span>-->
+<!--                        <button class="reorder-btn">Reorder</button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="order-card">
-                    <div class="order-header">
-                        <span class="order-id">#12344</span>
-                        <span class="order-status shipped">Shipped</span>
-                    </div>
-                    <div class="order-items">
-                        <img src="/placeholder.svg?height=60&width=60" alt="Product">
-                        <div class="item-details">
-                            <h4>Sacred Texts Collection</h4>
-                            <p>Quantity: 1 | Price: ₹1,200</p>
-                        </div>
-                    </div>
-                    <div class="order-footer">
-                        <span class="order-date">Ordered on: 12 Jan 2024</span>
-                        <button class="track-btn">Track Order</button>
-                    </div>
-                </div>
-            </div>
+<!--                <div class="order-card">-->
+<!--                    <div class="order-header">-->
+<!--                        <span class="order-id">#12344</span>-->
+<!--                        <span class="order-status shipped">Shipped</span>-->
+<!--                    </div>-->
+<!--                    <div class="order-items">-->
+<!--                        <img src="/placeholder.svg?height=60&width=60" alt="Product">-->
+<!--                        <div class="item-details">-->
+<!--                            <h4>Sacred Texts Collection</h4>-->
+<!--                            <p>Quantity: 1 | Price: ₹1,200</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="order-footer">-->
+<!--                        <span class="order-date">Ordered on: 12 Jan 2024</span>-->
+<!--                        <button class="track-btn">Track Order</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </section>
 
 
@@ -378,7 +382,7 @@
 
                 <div class="form-group">
                     <label for="listingImages">Images</label>
-                    <input type="file" id="listingImages" multiple accept="image/*">
+                    <input type="text" id="listingImages" placeholder="Paste Image URL Here" multiple accept="image/*">
                     <div class="image-preview" id="imagePreview"></div>
                 </div>
 
