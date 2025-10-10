@@ -218,9 +218,9 @@ function validateSignupForm(data) {
     errors.push("Passwords do not match")
   }
 
-  if (!data.userType) {
-    errors.push("Please select your role")
-  }
+//  if (!data.userType) {
+//    errors.push("Please select your role")
+//  }
 
   if (!data.agreeTerms) {
     errors.push("You must agree to the Terms & Conditions")
