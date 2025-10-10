@@ -56,7 +56,7 @@ public class AppConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://aviyanadivine-2.onrender.com"); // your frontend URL
+        config.addAllowedOrigin("https://aviyanadivine-mpcg.vercel.app"); // your frontend URL
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
