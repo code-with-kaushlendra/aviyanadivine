@@ -381,8 +381,8 @@ function showNotification(message, type = "info") {
 }
 
 // Add CSS animations for notifications
-const style = document.createElement("style")
-style.textContent = `
+const notificationStyle = document.createElement("style")
+notificationStyle.textContent = `
     @keyframes slideIn {
         from {
             transform: translateX(100%);
@@ -405,7 +405,8 @@ style.textContent = `
         }
     }
 `
-document.head.appendChild(style)
+document.head.appendChild(notificationStyle)
+
 
 // Auto-fill remembered user
 document.addEventListener("DOMContentLoaded", () => {
