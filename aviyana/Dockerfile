@@ -1,17 +1,25 @@
-# Use official Maven image with Java 17
-FROM maven:3.9.0-eclipse-temurin-17
+# ✅ Build stage with Maven and Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Copy your project files
-COPY . .
+# Copy Maven config and source code
+COPY pom.xml .
+COPY src ./src
 
-# Build the project skipping tests
+# Build the app
 RUN mvn clean package -DskipTests
 
-# Expose the port your app runs on (adjust if needed)
+# ✅ Runtime stage with Java 21
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Copy the built JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose default Spring Boot port
 EXPOSE 8080
 
-# Run the app - adjust if your app's start command is different
-CMD ["java", "-jar", "target/your-app-name.jar"]
+# Run the app
+ENTRYPOINT ["java", "-jar", "app.jar"]
