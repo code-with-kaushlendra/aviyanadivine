@@ -222,9 +222,9 @@ function validateSignupForm(data) {
 //    errors.push("Please select your role")
 //  }
 
-  if (!data.agreeTerms) {
-    errors.push("You must agree to the Terms & Conditions")
-  }
+//  if (!data.agreeTerms) {
+//    errors.push("You must agree to the Terms & Conditions")
+//  }
 
   return errors
 }
