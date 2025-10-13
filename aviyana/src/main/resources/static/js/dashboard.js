@@ -46,7 +46,7 @@ fetchProducts();
 }
 
 async function fetchProducts(){
-const response=await fetch("http://localhost:8080/api/products");
+const response=await fetch("https://aviyanadivine-2.onrender.com/api/products");
 const products =await response.json();
 
 let container=document.getElementById("products-container");
@@ -132,7 +132,7 @@ document.getElementById("add-product").addEventListener("submit",async function 
           };
 
               try {
-                  const response = await fetch("http://localhost:8080/api/products", {
+                  const response = await fetch("https://aviyanadivine-2.onrender.com/api/products", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(product)

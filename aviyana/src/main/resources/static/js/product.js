@@ -15,7 +15,7 @@ if (e.target.classList.contains('btn-buy-now')) {
   });
 
   // Fetch data from backend API
-  fetch("http://localhost:8080/api/products")
+  fetch("https://aviyanadivine-2.onrender.com/api/products")
     .then(response => {
       if (!response.ok) {
         throw new Error("Failed to fetch products");
