@@ -14,58 +14,71 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.List;
 
 
 @Configuration
 public class AppConfig {
 
-
-   @Bean
-   UserDetailsService userDetailsService(){
-        UserDetails userDetailsOne= User.withUsername("User1")
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user1 = User.withUsername("User1")
                 .password(passwordEncoder().encode("Pass1"))
+                .roles("USER")
                 .build();
 
-        UserDetails userDetailsTwo=User.withUsername("User2")
+        UserDetails user2 = User.withUsername("User2")
                 .password(passwordEncoder().encode("Pass2"))
+                .roles("USER")
                 .build();
-        UserDetails admin=User.withUsername("Admin")
+
+        UserDetails admin = User.withUsername("Admin")
                 .password(passwordEncoder().encode("Admin1"))
+                .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(userDetailsOne,userDetailsTwo, admin);
+        return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrfCustomizer -> csrfCustomizer.disable());
-        httpSecurity.cors(Customizer.withDefaults());  // enable CORS
-        httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers("/api/auth/signup", "/api/auth/login", "/api/products", "/api/shipping", "/api/payment").permitAll()
-                        .anyRequest().authenticated());
-
-        httpSecurity.sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        return httpSecurity.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Hook in CORS config
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/auth/signup",
+                                "/api/auth/login",
+                                "/api/products",
+                                "/api/shipping",
+                                "/api/payment"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
     }
 
+    // ✅ CORS configuration linked directly to Spring Security
     @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("https://aviyanadivine-mpcg.vercel.app")); // Your frontend
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://aviyanadivine-mpcg.vercel.app"); // your frontend URL
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
 
-
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
