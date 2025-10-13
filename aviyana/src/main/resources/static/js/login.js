@@ -1,13 +1,11 @@
+<script>
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    const user = {
-        email: email,
-        password: password
-    };
+    const user = { email, password };
 
     try {
         const res = await fetch("https://aviyanadivine-2.onrender.com/api/auth/login", {
@@ -16,31 +14,40 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             body: JSON.stringify(user)
         });
 
-        // Safely attempt to parse the response
         let result = {};
         try {
             result = await res.json();
         } catch (parseError) {
-            console.error("Failed to parse response JSON:", parseError);
+            console.error("Failed to parse JSON:", parseError);
+            alert("Unexpected server response. Try again later.");
+            return;
         }
 
         if (res.ok) {
-            alert("Login successful");
+            alert("Login successful!");
+
+            // Debug: Check what's inside
+            console.log("Login response:", result);
+            console.log("typeof is_admin:", typeof result.is_admin); // should be number or string
+
+            // Store in localStorage
             localStorage.setItem("user", JSON.stringify(result));
 
-            // Redirect based on is_admin flag
-            if (result.is_admin == 1) {
-                window.location.href = "dashboard.html"; // Admin page
+            // Convert is_admin to number and redirect correctly
+            if (Number(result.is_admin) === 1) {
+                window.location.href = "dashboard.html"; // Admin
             } else {
-                window.location.href = "products.html"; // User page
+                window.location.href = "products.html"; // Normal user
             }
+
         } else {
-            // Optional: log server message if available
-            console.warn("Login failed:", result?.message || res.status);
-            alert("Login failed. Please check your email or password.");
+            console.warn("Login failed:", result?.message || res.statusText);
+            alert(result?.message || "Login failed. Check email or password.");
         }
+
     } catch (err) {
-        console.error("Login request failed:", err);
-        alert("Network error. Please try again later.");
+        console.error("Network or server error:", err);
+        alert("Server error. Try again later.");
     }
 });
+</script>
