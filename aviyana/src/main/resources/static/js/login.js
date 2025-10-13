@@ -29,7 +29,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             localStorage.setItem("user", JSON.stringify(result));
 
             // Redirect based on is_admin flag
-            if (result.is_admin === 1) {
+            if (result.is_admin == 1) {
                 window.location.href = "dashboard.html"; // Admin page
             } else {
                 window.location.href = "products.html"; // User page
