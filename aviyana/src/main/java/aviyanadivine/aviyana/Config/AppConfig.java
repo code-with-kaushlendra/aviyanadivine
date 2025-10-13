@@ -45,7 +45,7 @@ public class AppConfig {
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/auth/signup", "/api/auth/login", "/api/products", "/api/shipping", "/api/payment").permitAll()
                         .anyRequest().authenticated());
-        httpSecurity.httpBasic(Customizer.withDefaults());
+
         httpSecurity.sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return httpSecurity.build();
