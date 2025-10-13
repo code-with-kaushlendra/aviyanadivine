@@ -29,7 +29,8 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             console.log("Login response:", result);
 
             // Check if is_admin is directly on result or inside result.data
-            const isAdmin = result?.is_admin ?? result?.data?.is_admin;
+           const isAdmin = Number(result.is_admin);
+
 
             if (typeof isAdmin === 'undefined') {
                 alert("Unexpected response format. 'is_admin' missing.");
