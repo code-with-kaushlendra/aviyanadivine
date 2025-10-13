@@ -26,18 +26,23 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         if (res.ok) {
             alert("Login successful!");
 
-            // Debug: Check what's inside
             console.log("Login response:", result);
-            console.log("typeof is_admin:", typeof result.is_admin); // should be number or string
 
-            // Store in localStorage
+            // Check if is_admin is directly on result or inside result.data
+            const isAdmin = result?.is_admin ?? result?.data?.is_admin;
+
+            if (typeof isAdmin === 'undefined') {
+                alert("Unexpected response format. 'is_admin' missing.");
+                return;
+            }
+
+            // Save the whole response (or just data) in localStorage
             localStorage.setItem("user", JSON.stringify(result));
 
-            // Convert is_admin to number and redirect correctly
-            if (Number(result.is_admin) === 1) {
+            if (Number(isAdmin) === 1) {
                 window.location.href = "dashboard.html"; // Admin
             } else {
-                window.location.href = "products.html"; // Normal user
+                window.location.href = "products.html"; // User
             }
 
         } else {
