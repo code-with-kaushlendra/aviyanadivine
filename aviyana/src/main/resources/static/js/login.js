@@ -1,4 +1,4 @@
-<script>
+
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -48,4 +48,4 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         alert("Network or server error. Try again later.");
     }
 });
-</script>
+
