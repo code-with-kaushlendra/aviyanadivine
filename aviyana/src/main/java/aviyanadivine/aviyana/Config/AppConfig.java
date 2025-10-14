@@ -68,7 +68,7 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("https://aviyanadivine-mpcg.vercel.app")); // Your frontend
+        config.setAllowedOrigins(List.of("https://aviyanadivine-mpcg.vercel.app","https://www.aviyanadivine.com")); // Your frontend
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
