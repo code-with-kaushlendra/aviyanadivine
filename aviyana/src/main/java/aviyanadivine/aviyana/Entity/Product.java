@@ -24,7 +24,10 @@ public class Product {
     private String description;
     private Double price;
     private Integer quantity;
-    private String image_url;
+
+    @Column(name = "image_url") // maps to DB column
+    private String imageUrl;
+
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
