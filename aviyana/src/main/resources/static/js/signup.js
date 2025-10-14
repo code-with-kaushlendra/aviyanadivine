@@ -40,6 +40,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
 
         if (response.ok) {
             alert("Signup successful!");
+            localStorage.removeItem("user");
             window.location.href = "login.html"; // ✅ Change if you use a different login page
         } else {
             alert("Signup failed: " + result);
