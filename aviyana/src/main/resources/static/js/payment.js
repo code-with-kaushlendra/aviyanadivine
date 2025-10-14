@@ -44,7 +44,7 @@ document.getElementById("payBtn").addEventListener("click", async function () {
           updated_at: new Date().toISOString()
         };
 
-        const saveResponse = await fetch("http://localhost:8080/api/payment/save", {
+        const saveResponse = await fetch("https://aviyanadivine-2.onrender.com/api/payment/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(paymentData)
