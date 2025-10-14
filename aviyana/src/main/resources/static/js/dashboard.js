@@ -97,7 +97,7 @@ async function updateProduct(id) {
             description: newDesc,
             price: parseFloat(newPrice),
             quantity: parseInt(newQty),
-            image_url: newImg
+            imageUrl: newImg
         })
     });
 
@@ -128,7 +128,7 @@ document.getElementById("add-product").addEventListener("submit",async function 
               description,
               price: parseFloat(price),
               quantity: parseInt(quantity),
-              image_url
+              imageUrl: image_url
           };
 
               try {
