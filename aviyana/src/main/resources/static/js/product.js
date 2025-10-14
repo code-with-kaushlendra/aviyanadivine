@@ -49,7 +49,7 @@ if (e.target.classList.contains('btn-buy-now')) {
 
       productCard.innerHTML = `
         <div class="product-image">
-         <img src="${product.image_url || 'https://via.placeholder.com/300x300.png?text=No+Image'}">
+         <img src="${product.imageUrl || 'https://via.placeholder.com/300x300.png?text=No+Image'}">
 
           <div class="product-overlay">
             <button class="btn-quick-view" data-product-id="${product.id}">Quick View</button>
