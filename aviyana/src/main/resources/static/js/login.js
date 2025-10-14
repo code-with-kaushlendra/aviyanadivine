@@ -14,46 +14,38 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             body: JSON.stringify(user)
         });
 
-        let result = {};
-        try {
-            result = await res.json();
-        } catch (parseError) {
-            console.error("Failed to parse JSON:", parseError);
-            alert("Unexpected server response. Try again later.");
+        const result = await res.json();
+        console.log("Login response:", result);
+
+        if (!res.ok) {
+            alert(result?.message || "Login failed. Check email or password.");
             return;
         }
 
-        if (res.ok) {
-            alert("Login successful!");
+        const isAdminRaw = result.is_admin;
+        const isAdmin = parseInt(isAdminRaw, 10);
+        console.log("is_admin (raw):", isAdminRaw, "| Parsed:", isAdmin);
 
-            console.log("Login response:", result);
+        if (isNaN(isAdmin)) {
+            alert("Invalid role data received. Contact support.");
+            return;
+        }
 
-            // Check if is_admin is directly on result or inside result.data
-           const isAdmin = Number(result.is_admin);
+        // Save to localStorage
+        localStorage.setItem("user", JSON.stringify(result));
 
-
-            if (typeof isAdmin === 'undefined') {
-                alert("Unexpected response format. 'is_admin' missing.");
-                return;
-            }
-
-            // Save the whole response (or just data) in localStorage
-            localStorage.setItem("user", JSON.stringify(result));
-
-            if (Number(isAdmin) === 1) {
-                window.location.href = "dashboard.html"; // Admin
-            } else {
-                window.location.href = "products.html"; // User
-            }
-
+        // Redirect based on role
+        if (isAdmin === 1) {
+            console.log("Redirecting to: dashboard.html");
+            window.location.href = "dashboard.html";
         } else {
-            console.warn("Login failed:", result?.message || res.statusText);
-            alert(result?.message || "Login failed. Check email or password.");
+            console.log("Redirecting to: products.html");
+            window.location.href = "products.html";
         }
 
     } catch (err) {
-        console.error("Network or server error:", err);
-        alert("Server error. Try again later.");
+        console.error("Login error:", err);
+        alert("Network or server error. Try again later.");
     }
 });
 </script>

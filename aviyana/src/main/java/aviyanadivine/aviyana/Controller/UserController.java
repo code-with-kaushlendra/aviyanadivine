@@ -49,6 +49,7 @@ public class UserController {
 
                 Map<String, Object> response = new HashMap<>();
                 response.put("message", "Login successful");
+                System.out.println(isAdmin);
                 response.put("is_admin", isAdmin);
                 response.put("id", dbUser.getId());
 
