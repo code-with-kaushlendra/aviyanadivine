@@ -1,5 +1,6 @@
 package aviyanadivine.aviyana.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Product {
     private Double price;
     private Integer quantity;
 
+    @JsonProperty("imageUrl")
     @Column(name = "image_url") // maps to DB column
     private String imageUrl;
 
