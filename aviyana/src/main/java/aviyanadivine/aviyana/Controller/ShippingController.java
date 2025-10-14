@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/shipping")
-@CrossOrigin(origins = "http://localhost:5500") // your frontend port
+@CrossOrigin(origins = "*") // your frontend port
 public class ShippingController {
 
     @Autowired
