@@ -70,7 +70,7 @@ container.innerHTML= "";
 }
 
 async function deleteProduct(id) {
-    await fetch(`http://localhost:8080/api/products/${id}`, { method: "DELETE" });
+    await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
     fetchProducts();
 }
 async function updateProduct(id) {
@@ -87,7 +87,7 @@ async function updateProduct(id) {
     }
 
     // Send PUT request with updated data
-    await fetch(`http://localhost:8080/api/products/${id}`, {
+    await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
