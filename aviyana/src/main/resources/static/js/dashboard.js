@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const parsed = JSON.parse(user);
 
-            document.getElementById("userName").innerHTML = `Welcome, ${parsed.firstName || "User"}!`;
+            document.getElementById("userName").innerHTML = `Welcome, ${parsed.firstname || "Admin"}!`;
         } catch (e) {
             alert("User data corrupted. Redirecting to login.");
             localStorage.removeItem("user");
@@ -81,8 +81,20 @@ async function fetchProducts() {
 }
 
 async function deleteProduct(id) {
-    await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
-    fetchProducts();
+    try {
+        const response = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
+
+        if (response.ok) {
+            alert("Product deleted successfully!");
+            fetchProducts(); // Refresh the list
+        } else {
+            const errorText = await response.text();
+            alert("Failed to delete product: " + errorText);
+        }
+    } catch (error) {
+        console.error("Delete error:", error);
+        alert("An error occurred while deleting the product.");
+    }
 }
 let currentUpdateId = null;
 
