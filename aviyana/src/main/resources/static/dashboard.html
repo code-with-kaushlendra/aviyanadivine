@@ -524,6 +524,34 @@
         </section>
     </main>
 </div>
+<!-- Update Product Modal -->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUpdateModal()">&times;</span>
+        <h2>Update Product</h2>
+        <form id="updateProductForm">
+            <input type="hidden" id="updateProductId">
+
+            <label for="updateName">Name:</label>
+            <input type="text" id="updateName" required>
+
+            <label for="updateDescription">Description:</label>
+            <input type="text" id="updateDescription" required>
+
+            <label for="updatePrice">Price (₹):</label>
+            <input type="number" id="updatePrice" required>
+
+            <label for="updateQuantity">Quantity:</label>
+            <input type="number" id="updateQuantity" required>
+
+            <label for="updateImage">Image URL:</label>
+            <input type="text" id="updateImage" required>
+
+            <button type="submit">Update Product</button>
+        </form>
+    </div>
+</div>
+
 
 <script src="js/main.js"></script>
 <script src="js/dashboard.js"></script>

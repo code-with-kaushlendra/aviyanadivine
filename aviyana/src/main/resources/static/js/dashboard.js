@@ -84,37 +84,69 @@ async function deleteProduct(id) {
     await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
     fetchProducts();
 }
+let currentUpdateId = null;
+
 async function updateProduct(id) {
-    // Ask user for new values
-    const newName = prompt("Enter new product name:");
-    const newDesc = prompt("Enter new description:");
-    const newPrice = prompt("Enter new price:");
-    const newQty = prompt("Enter new quantity:");
-    const newImg = prompt("Pick new image:");
+  currentUpdateId = id;
 
-    if (!newName || !newPrice || !newQty) {
-        alert("Update cancelled. All fields are required.");
-        return;
-    }
+  // Get product data
+  const response = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`);
+  const product = await response.json();
 
-    // Send PUT request with updated data
-    await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: newName,
-            description: newDesc,
-            price: parseFloat(newPrice),
-            quantity: parseInt(newQty),
-            imageUrl: newImg
-        })
+  // Fill form
+  document.getElementById("updateProductId").value = id;
+  document.getElementById("updateName").value = product.name;
+  document.getElementById("updateDescription").value = product.description;
+  document.getElementById("updatePrice").value = product.price;
+  document.getElementById("updateQuantity").value = product.quantity;
+  document.getElementById("updateImage").value = product.imageUrl;
+
+  // Show modal
+  document.getElementById("updateModal").style.display = "block";
+}
+
+function closeUpdateModal() {
+  document.getElementById("updateModal").style.display = "none";
+  currentUpdateId = null;
+}
+document.getElementById("updateProductForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const id = currentUpdateId;
+  const name = document.getElementById("updateName").value.trim();
+  const description = document.getElementById("updateDescription").value.trim();
+  const price = parseFloat(document.getElementById("updatePrice").value);
+  const quantity = parseInt(document.getElementById("updateQuantity").value);
+  const imageUrl = document.getElementById("updateImage").value.trim();
+
+  if (!name || !description || isNaN(price) || isNaN(quantity) || !imageUrl) {
+    alert("Please fill all fields correctly.");
+    return;
+  }
+
+  const updatedProduct = { name, description, price, quantity, imageUrl };
+
+  try {
+    const res = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedProduct)
     });
 
-    // Reload products
-    fetchProducts();
-}
+    if (res.ok) {
+      alert("Product updated successfully!");
+      closeUpdateModal();
+      fetchProducts(); // reload product list
+    } else {
+      const err = await res.text();
+      alert("Failed to update: " + err);
+    }
+  } catch (error) {
+    console.error("Update error:", error);
+    alert("Something went wrong.");
+  }
+});
+
 
 document.getElementById("add-product").addEventListener("submit",async function (e){
  e.preventDefault();
