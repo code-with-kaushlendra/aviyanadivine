@@ -96,6 +96,65 @@ body {
     width: 120px;
   }
 }
+
+/* ==== RESPONSIVE HEADER ==== */
+@media (max-width: 992px) {
+  .header .container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .nav-menu {
+    display: none;
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-actions {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .nav-actions.active {
+    display: flex;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .search-box input {
+    width: 150px;
+  }
+
+  .logo {
+    width: 55px;
+    height: 55px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.3rem;
+  }
+
+  .brand-text p {
+    font-size: 0.75rem;
+  }
+}
 /* Hero Container */
 .hero {
   position: relative;
