@@ -18,49 +18,125 @@ body {
   padding: 0 20px;
 
 }
-
-/* Header Styles */ .header { background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 0.6rem 1rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); } .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; } .brand-text{ display: flex; flex-direction: column; justify-content: center; align-items: flex-start;}.nav-brand { display: flex; align-items: center; gap: 12px; margin-right: auto; } .logo { width: 70px; height: 70px; border-radius: 50%;   object-fit: cover; padding: 6px;  box-shadow: 0 0 8px rgba(255,255,255,0.3); } .brand-text h1 { font-size: 1.7rem; font-weight: 700; margin: 0; line-height: 1.1;} .brand-text p { font-size: 0.85rem; opacity: 0.9; margin: 2px 0 0 ;  } .nav-menu ul { display: flex; list-style: none; gap: 1.5rem; margin: 0;  padding: 0;} .nav-menu a { color: white; text-decoration: none; font-weight: 500; transition: opacity 0.3s; font-size: 1rem; } .user-name { font-weight: bold; color: #555; } #logout-btn { padding: 6px 12px; background-color: #e74c3c; color: white; border: none; cursor: pointer; border-radius: 4px; } .nav-menu a:hover { opacity: 0.8; } .nav-actions { display: flex; align-items: center; gap: 1rem; margin-left: auto; } .search-box { display: flex; background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); } .search-box input { padding: 8px 15px; border: none; outline: none; width: 180px; font-size: 0.9rem; } .search-box button { background: #ff6b35; color: white; border: none; padding: 8px 12px; cursor: pointer; }
-
-.cart-icon {
-  position: relative;
+/* ==== HEADER (Improved & Responsive) ==== */
+.header {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
   color: white;
-  font-size: 1.2rem;
-  text-decoration: none;
+  padding: 0.6rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.cart-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #fff;
-  color: #ff6b35;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+.header .container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: bold;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
-.auth-buttons {
+/* Brand Section */
+.nav-brand {
   display: flex;
+  align-items: center;
   gap: 10px;
+  margin-right: auto;
 }
 
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  object-fit: cover;
+  padding: 5px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.brand-text h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.brand-text p {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin: 2px 0 0;
+}
+
+/* Navigation Menu */
+.nav-menu ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+  font-size: 1rem;
+}
+
+.nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* Search and Buttons */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+  padding: 8px 15px;
+  border: none;
+  outline: none;
+  width: 180px;
+  font-size: 0.9rem;
+}
+
+.search-box button {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Buttons */
 .btn-login,
 .btn-signup {
-  padding: 8px 16px;
-  text-decoration: none;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-weight: 500;
-  transition: all 0.3s;
-}
-
-.btn-login {
+  border: 2px solid white;
+  background: transparent;
   color: white;
-  border: 1px solid white;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .btn-signup {
@@ -68,17 +144,122 @@ body {
   color: #ff6b35;
 }
 
-.btn-login:hover,
-.btn-signup:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.btn-login:hover {
+  background: white;
+  color: #ff6b35;
 }
 
+.btn-signup:hover {
+  background: #fff4e6;
+  color: #ff6b35;
+}
+
+/* Cart Icon */
+.cart-icon {
+  position: relative;
+  color: white;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: white;
+  color: #ff6b35;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  color: white;
   cursor: pointer;
+  margin-left: 1rem;
 }
+
+/* ==== RESPONSIVE HEADER ==== */
+@media (max-width: 992px) {
+  .header .container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .nav-menu {
+    display: none;
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-actions {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .nav-actions.active {
+    display: flex;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .search-box input {
+    width: 150px;
+  }
+
+  .logo {
+    width: 55px;
+    height: 55px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.3rem;
+  }
+
+  .brand-text p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .brand-text p {
+    font-size: 0.7rem;
+  }
+
+  .search-box input {
+    width: 120px;
+  }
+}
+
 /* Hero Container */
 .hero {
   position: relative;
