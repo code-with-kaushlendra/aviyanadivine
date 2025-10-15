@@ -76,8 +76,25 @@ body {
 
 .mobile-menu-toggle {
   display: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  color: white;
   cursor: pointer;
+  margin-left: 1rem;
+}
+
+
+@media (max-width: 480px) {
+  .brand-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .brand-text p {
+    font-size: 0.7rem;
+  }
+
+  .search-box input {
+    width: 120px;
+  }
 }
 /* Hero Container */
 .hero {
