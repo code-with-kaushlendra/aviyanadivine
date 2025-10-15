@@ -44,42 +44,41 @@ if(section === 'orders' || section=== 'listings'){
 fetchProducts();
 }
 }
+async function fetchProducts() {
+    const response = await fetch("https://aviyanadivine-2.onrender.com/api/products");
+    const products = await response.json();
 
-async function fetchProducts(){
-const response=await fetch("https://aviyanadivine-2.onrender.com/api/products");
-const products =await response.json();
-
-let container = document.getElementById("products-container");
-container.innerHTML = `
-    <table class="product-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price (₹)</th>
-                <th>Stock</th>
-                <th>Image</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${products.map(p => `
+    const container = document.getElementById("products-container");
+    container.innerHTML = `
+        <table class="product-table">
+            <thead>
                 <tr>
-                    <td>${p.name}</td>
-                    <td>${p.description}</td>
-                    <td>${p.price}</td>
-                    <td>${p.quantity}</td>
-                    <td><img src="${p.image_url}" alt="${p.name}" class="product-image"></td>
-                    <td>
-                        <button onclick="deleteProduct(${p.id})" class="btn btn-delete">Delete</button>
-                        <button onclick="updateProduct(${p.id})" class="btn btn-update">Update</button>
-                    </td>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price (₹)</th>
+                    <th>Stock</th>
+                    <th>Image</th>
+                    <th>Actions</th>
                 </tr>
-            `).join('')}
-        </tbody>
-    </table>
-`;
-
+            </thead>
+            <tbody>
+                ${products.map(p => `
+                    <tr>
+                        <td>${p.name}</td>
+                        <td>${p.description}</td>
+                        <td>${p.price}</td>
+                        <td>${p.quantity}</td>
+                        <td><img src="${p.image_url}" alt="${p.name}" style="width: 60px; height: auto;"></td>
+                        <td>
+                            <button onclick="deleteProduct(${p.id})">Delete</button>
+                            <button onclick="updateProduct(${p.id})">Update</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
 
 async function deleteProduct(id) {
     await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
