@@ -53,7 +53,7 @@ document.getElementById("payBtn").addEventListener("click", async function () {
         if (saveResponse.ok) {
           alert("Payment successful! Thank you for shopping with us.");
           localStorage.clear();
-         window.location.href = `success.html?payment_id=${response.razorpay_payment_id}&order_id=${orderData.id}&amount=${total}`;
+         window.location.href = `success.html?payment_id=${response.razorpay_payment_id}&order_id=${orderData.id}&amount=${total*100}`;
 
         } else {
           alert("Payment succeeded, but failed to save details.");
