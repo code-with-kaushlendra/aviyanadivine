@@ -210,4 +210,60 @@ document.getElementById("add-product").addEventListener("submit",async function 
 
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Notification settings toggle
+    const switches = document.querySelectorAll("#settings .setting-item input[type='checkbox']");
+    switches.forEach((toggle, index) => {
+        toggle.addEventListener("change", () => {
+            const setting = toggle.nextElementSibling.textContent.trim();
+            const enabled = toggle.checked;
+
+            console.log(`Setting changed: ${setting} is now ${enabled ? 'enabled' : 'disabled'}`);
+
+            // Save to localStorage or call backend if needed
+            // localStorage.setItem(`setting_${index}`, enabled);
+        });
+    });
+
+    // Change Password
+    document.querySelector(".change-password-btn").addEventListener("click", () => {
+        const newPassword = prompt("Enter new password:");
+
+        if (newPassword && newPassword.length >= 6) {
+            // In a real app, you would call the backend API to update password
+            alert("Password changed successfully (simulated).");
+        } else {
+            alert("Password must be at least 6 characters.");
+        }
+    });
+
+    // Delete Account
+    document.querySelector(".delete-account-btn").addEventListener("click", async () => {
+        const confirmDelete = confirm("Are you sure you want to delete your account? This cannot be undone.");
+
+        if (confirmDelete) {
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+            try {
+                const res = await fetch(`https://aviyanadivine-2.onrender.com/api/users/${user.id}`, {
+                    method: "DELETE"
+                });
+
+                if (res.ok) {
+                    alert("Account deleted successfully.");
+                    localStorage.removeItem("user");
+                    window.location.href = "login.html";
+                } else {
+                    const err = await res.text();
+                    alert("Failed to delete account: " + err);
+                }
+            } catch (error) {
+                console.error("Delete account error:", error);
+                alert("Error deleting account.");
+            }
+        }
+    });
+});
+
+
 
