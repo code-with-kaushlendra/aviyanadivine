@@ -3,28 +3,43 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payment - Aviyana Divine</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <title>Secure Payment - Aviyana Divine</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Razorpay -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/payment.css" />
 </head>
 <body>
 
 <header class="header">
     <div class="container">
-        <h1>Aviyana Divine - Secure Payment</h1>
+        <img src="images/divinelogo.jpeg" alt="Aviyana Divine Logo" class="logo">
+        <h1>Secure Payment Portal</h1>
     </div>
 </header>
 
 <main class="main-content">
     <div class="container">
-        <h2>Complete Your Payment</h2>
-        <p>Click the button below to proceed with payment using Razorpay.</p>
+        <h2>Complete Your Contribution</h2>
+        <p>Please proceed with secure payment through Razorpay. Thank you for supporting Aviyana Divine.</p>
         <button id="payBtn" class="checkout-btn">
             <i class="fas fa-lock"></i> Pay Now
         </button>
     </div>
 </main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Aviyana Divine. All rights reserved.</p>
+    </div>
+</footer>
 
 <script src="js/payment.js"></script>
 </body>
