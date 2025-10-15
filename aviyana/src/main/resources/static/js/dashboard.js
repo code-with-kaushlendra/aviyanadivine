@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Session expired. Please login again.");
         localStorage.removeItem("user");
         window.location.href = "login.html";
-    }, 600000); // 10 min
+    }, 300000); // 5 min
 
     // Logout button functionality
     const logoutBtn = document.getElementById("logout-btn");
@@ -49,25 +49,37 @@ async function fetchProducts(){
 const response=await fetch("https://aviyanadivine-2.onrender.com/api/products");
 const products =await response.json();
 
-let container=document.getElementById("products-container");
-container.innerHTML= "";
+let container = document.getElementById("products-container");
+container.innerHTML = `
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price (₹)</th>
+                <th>Stock</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${products.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>${p.description}</td>
+                    <td>${p.price}</td>
+                    <td>${p.quantity}</td>
+                    <td><img src="${p.image_url}" alt="${p.name}" class="product-image"></td>
+                    <td>
+                        <button onclick="deleteProduct(${p.id})" class="btn btn-delete">Delete</button>
+                        <button onclick="updateProduct(${p.id})" class="btn btn-update">Update</button>
+                    </td>
+                </tr>
+            `).join('')}
+        </tbody>
+    </table>
+`;
 
-
-
- products.forEach(p => {
-        container.innerHTML += `
-            <div class="product-card">
-                <h3>${p.name}</h3>
-                <p>${p.description}</p>
-                <p>Price: ₹${p.price}</p>
-                <p>Stock: ${p.quantity}</p>
-                <p>ImageURL: ${p.image_url}</p>
-                <button onclick="deleteProduct(${p.id})">Delete</button>
-                <button onclick="updateProduct(${p.id})">Update</button>
-            </div>
-        `;
-    });
-}
 
 async function deleteProduct(id) {
     await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
