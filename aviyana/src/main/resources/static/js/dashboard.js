@@ -68,7 +68,7 @@ async function fetchProducts() {
                         <td>${p.description}</td>
                         <td>${p.price}</td>
                         <td>${p.quantity}</td>
-                        <td><img src="${p.image_url}" alt="${p.name}" style="width: 60px; height: auto;"></td>
+                        <td><img src="${p.imageUrl}" alt="${p.name}" style="width: 60px; height: auto;"></td>
                         <td>
                             <button onclick="deleteProduct(${p.id})">Delete</button>
                             <button onclick="updateProduct(${p.id})">Update</button>
