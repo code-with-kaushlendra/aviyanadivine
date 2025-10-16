@@ -134,6 +134,7 @@ document.getElementById("updateProductForm").addEventListener("submit", async fu
   const price = parseFloat(document.getElementById("updatePrice").value);
   const quantity = parseInt(document.getElementById("updateQuantity").value);
   const imageUrl = document.getElementById("updateImage").value.trim();
+  const category = document.getElementById("updateCategory").value;
 
   if (!name || !description || isNaN(price) || isNaN(quantity) || !imageUrl) {
     alert("Please fill all fields correctly.");
