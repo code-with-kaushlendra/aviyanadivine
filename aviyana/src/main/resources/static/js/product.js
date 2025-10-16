@@ -1,6 +1,9 @@
 // js/products.js
 
 document.addEventListener("DOMContentLoaded", () => {
+let currentCategory="all";
+let currentSearch="";
+
   const productsGrid = document.getElementById("productsGrid");
   const filterButtons = document.querySelectorAll(".filter-btn");
   let allProducts = [];
@@ -87,23 +90,40 @@ if (e.target.classList.contains('btn-buy-now')) {
     return stars;
   }
 
+function filterAndRender() {
+  let filtered = allProducts;
+
   // Filter by category
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const category = button.getAttribute("data-category");
+  if (currentCategory !== "all") {
+    filtered = filtered.filter(product =>
+      (product.category || '').toLowerCase() === currentCategory
+    );
+  }
 
-      // UI: Toggle active button
-      filterButtons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
+  // Filter by search text
+  if (currentSearch) {
+    filtered = filtered.filter(product =>
+      product.name && product.name.toLowerCase().includes(currentSearch)
+    );
+  }
 
-      const filtered = category === "all"
-        ? allProducts
-        : allProducts.filter(p => (p.category || '').toLowerCase() === category);
+  renderProducts(filtered);
+}
 
-      renderProducts(filtered);
-    });
+
+  // Filter by category
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    currentCategory = button.getAttribute("data-category");
+
+    // Toggle active class
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+
+    filterAndRender(); // Apply filters
   });
 });
+
 
 
 
@@ -173,14 +193,11 @@ function getCurrentUserId() {
 
 const searchInput=document.getElementById("productSearch");
 
-searchInput.addEventListener("input",()=>{
-const query=searchInput.value.toLowerCase().trim();
-
-const filtered=allProducts.filter(product=>
-product.name && product.name.toLowerCase().includes(query)
-);
-renderProducts(filtered);
+searchInput.addEventListener("input", () => {
+  currentSearch = searchInput.value.toLowerCase().trim();
+  filterAndRender(); // Apply filters
 });
+
 
 
 
