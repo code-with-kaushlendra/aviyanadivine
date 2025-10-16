@@ -198,7 +198,7 @@ searchInput.addEventListener("input", () => {
   filterAndRender(); // Apply filters
 });
 
-
+});
 
 
 
