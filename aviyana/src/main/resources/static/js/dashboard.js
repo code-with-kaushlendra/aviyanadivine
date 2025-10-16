@@ -141,7 +141,7 @@ document.getElementById("updateProductForm").addEventListener("submit", async fu
     return;
   }
 
-  const updatedProduct = { name, description, price, quantity, imageUrl };
+  const updatedProduct = { name, description, price, quantity, imageUrl, category };
 
   try {
     const res = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, {
