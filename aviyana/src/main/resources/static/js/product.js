@@ -171,7 +171,16 @@ function getCurrentUserId() {
   return user ? user.id : null;
 }
 
+const searchInput=document.getElementById("productSearch");
 
+searchInput.addEventListener("input",()=>{
+const query=searchInput.value.toLowerCase().trim();
+
+const filtered=allProducts.filter(product=>
+product.name && product.name.toLowerCase().includes(query)
+);
+renderProducts(filtered);
+});
 
 
 
