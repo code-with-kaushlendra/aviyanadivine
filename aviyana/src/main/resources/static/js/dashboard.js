@@ -58,6 +58,7 @@ async function fetchProducts() {
                     <th>Price (₹)</th>
                     <th>Stock</th>
                     <th>Image</th>
+                    <th>Category</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -68,6 +69,7 @@ async function fetchProducts() {
                         <td>${p.description}</td>
                         <td>${p.price}</td>
                         <td>${p.quantity}</td>
+                        <td>${p.category}</td>
                         <td><img src="${p.imageUrl}" alt="${p.name}" style="width: 60px; height: auto;"></td>
                         <td>
                             <button onclick="deleteProduct(${p.id})">Delete</button>
@@ -111,6 +113,7 @@ async function updateProduct(id) {
   document.getElementById("updateDescription").value = product.description;
   document.getElementById("updatePrice").value = product.price;
   document.getElementById("updateQuantity").value = product.quantity;
+  document.getElementById("updateCategory").value = product.category;
   document.getElementById("updateImage").value = product.imageUrl;
 
   // Show modal
@@ -168,12 +171,13 @@ document.getElementById("add-product").addEventListener("submit",async function 
     const price = document.getElementById("listingPrice").value.trim();
     const quantity = document.getElementById("listingQuantity").value.trim();
     const image_url = document.getElementById("listingImages").value.trim();
+    const category=document.getElementById("listingCategory").value.trim();
 
 
 
 
      // Basic validation
-      if (!name || !description || !price || !quantity ) {
+      if (!name || !description || !price || !quantity || !category ) {
           alert("Please fill out all fields.");
           return;
       }
@@ -183,7 +187,8 @@ document.getElementById("add-product").addEventListener("submit",async function 
               description,
               price: parseFloat(price),
               quantity: parseInt(quantity),
-              imageUrl: image_url
+              imageUrl: image_url,
+              category
           };
 
               try {
