@@ -8,7 +8,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const user = { email, password };
 
     try {
-        const res = await fetch("https://aviyanadivine-2.onrender.com/api/auth/login", {
+        const res = await fetch("https://aviyanadivine-4.onrender.com/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

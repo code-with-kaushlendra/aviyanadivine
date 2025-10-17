@@ -45,7 +45,7 @@ fetchProducts();
 }
 }
 async function fetchProducts() {
-    const response = await fetch("https://aviyanadivine-2.onrender.com/api/products");
+    const response = await fetch("https://aviyanadivine-4.onrender.com/api/products");
     const products = await response.json();
 
     const container = document.getElementById("products-container");
@@ -85,7 +85,7 @@ async function fetchProducts() {
 
 async function deleteProduct(id) {
     try {
-        const response = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, { method: "DELETE" });
+        const response = await fetch(`https://aviyanadivine-4.onrender.com/api/products/${id}`, { method: "DELETE" });
 
         if (response.ok) {
             alert("Product deleted successfully!");
@@ -105,7 +105,7 @@ async function updateProduct(id) {
   currentUpdateId = id;
 
   // Get product data
-  const response = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`);
+  const response = await fetch(`https://aviyanadivine-4.onrender.com/api/products/${id}`);
   const product = await response.json();
 
   // Fill form
@@ -144,7 +144,7 @@ document.getElementById("updateProductForm").addEventListener("submit", async fu
   const updatedProduct = { name, description, price, quantity, imageUrl, category };
 
   try {
-    const res = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${id}`, {
+    const res = await fetch(`https://aviyanadivine-4.onrender.com/api/products/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedProduct)
@@ -194,7 +194,7 @@ document.getElementById("add-product").addEventListener("submit",async function 
           };
 
               try {
-                  const response = await fetch("https://aviyanadivine-2.onrender.com/api/products", {
+                  const response = await fetch("https://aviyanadivine-4.onrender.com/api/products", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(product)
@@ -257,7 +257,7 @@ document.querySelector(".profile-details").addEventListener("submit", async func
     };
 
     try {
-        const response = await fetch(`https://aviyanadivine-2.onrender.com/api/admin/${id}`, {
+        const response = await fetch(`https://aviyanadivine-4.onrender.com/api/admin/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(admin)
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const user = JSON.parse(localStorage.getItem("user") || "{}");
 
             try {
-                const res = await fetch(`https://aviyanadivine-2.onrender.com/api/users/${user.id}`, {
+                const res = await fetch(`https://aviyanadivine-4.onrender.com/api/users/${user.id}`, {
                     method: "DELETE"
                 });
 

@@ -14,7 +14,7 @@
     }
 
     try {
-      const response = await fetch(`https://aviyanadivine-2.onrender.com/api/products/${productId}`);
+      const response = await fetch(`https://aviyanadivine-4.onrender.com/api/products/${productId}`);
       if (!response.ok) throw new Error("Product not found");
 
       const product = await response.json();
@@ -64,7 +64,7 @@
     };
 
     try {
-      const response = await fetch("https://aviyanadivine-2.onrender.com/api/shipping/save", {
+      const response = await fetch("https://aviyanadivine-4.onrender.com/api/shipping/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(addressData),

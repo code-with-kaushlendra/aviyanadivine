@@ -30,7 +30,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     };
 
     try {
-        const response = await fetch("https://aviyanadivine-2.onrender.com/api/auth/signup", {
+        const response = await fetch("https://aviyanadivine-4.onrender.com/api/auth/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

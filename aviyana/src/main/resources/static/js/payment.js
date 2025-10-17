@@ -9,7 +9,7 @@ document.getElementById("payBtn").addEventListener("click", async function () {
 
   try {
     // Step 1: Create Razorpay order via backend
-    const orderResponse = await fetch("https://aviyanadivine-2.onrender.com/api/payment/create-order", {
+    const orderResponse = await fetch("https://aviyanadivine-4.onrender.com/api/payment/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: total })
@@ -44,7 +44,7 @@ document.getElementById("payBtn").addEventListener("click", async function () {
           updated_at: new Date().toISOString()
         };
 
-        const saveResponse = await fetch("https://aviyanadivine-2.onrender.com/api/payment/save", {
+        const saveResponse = await fetch("https://aviyanadivine-4.onrender.com/api/payment/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(paymentData)
