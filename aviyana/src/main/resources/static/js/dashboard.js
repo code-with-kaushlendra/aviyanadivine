@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Session expired. Please login again.");
         localStorage.removeItem("user");
         window.location.href = "login.html";
-    }, 300000); // 5 min
+    },600000); // 10 min
 
     // Logout button functionality
     const logoutBtn = document.getElementById("logout-btn");
@@ -216,6 +216,71 @@ document.getElementById("add-product").addEventListener("submit",async function 
                   }
 
 });
+
+document.querySelector(".profile-details").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    // Get admin id from localStorage user object (assuming it has an 'id' field)
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const id = user.id;
+
+    if (!id) {
+        alert("User ID missing. Please login again.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Collect input values
+    const firstname = document.getElementById("firstName").value.trim();
+    const lastname = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phonenumber = document.getElementById("phone").value.trim(); // use phonenumber here
+    const address = document.getElementById("address").value.trim();
+    const imageUrl = document.getElementById("profileImage").src.trim();
+    const spritualinterests = document.getElementById("spiritualInterests").value.trim();
+
+    // Validate required fields (you can extend this)
+    if (!firstname || !lastname || !email) {
+        alert("Please fill out at least first name, last name, and email.");
+        return;
+    }
+
+    // Create admin object matching backend entity field names
+    const admin = {
+        firstname,
+        lastname,
+        email,
+        phonenumber: phonenumber ? Number(phonenumber) : null, // convert to number if present
+        address,
+        imageUrl,
+        spritualinterests
+    };
+
+    try {
+        const response = await fetch(`https://aviyanadivine-2.onrender.com/api/admin/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(admin)
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+            alert("Admin Details Updated Successfully!");
+            // Optionally update localStorage user info here if needed
+        } else {
+            alert("Failed to update: " + result);
+        }
+    } catch (error) {
+        console.error("Error during updating admin details:", error);
+        alert("An error occurred. Please try again later.");
+    }
+});
+
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     // Notification settings toggle
