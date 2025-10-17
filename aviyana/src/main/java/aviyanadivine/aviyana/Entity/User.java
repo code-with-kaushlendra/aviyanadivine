@@ -27,7 +27,7 @@ public class User {
     private String password;
 
     @Column(name = "is_admin")
-    private boolean isAdmin;
+    private boolean admin;
 
     private LocalDateTime created_at;
     private LocalDateTime updated_at;

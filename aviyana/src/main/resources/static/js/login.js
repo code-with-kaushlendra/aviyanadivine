@@ -1,4 +1,3 @@
-
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -22,24 +21,17 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             return;
         }
 
-        const isAdminRaw = result.is_admin;
-        const isAdmin = parseInt(isAdminRaw, 10);
-        console.log("is_admin (raw):", isAdminRaw, "| Parsed:", isAdmin);
+        // ✅ Fix: Use correct key and remove undefined variable
+        const isAdmin = result.admin === true;
+        console.log("Is Admin:", isAdmin);
 
-        if (isNaN(isAdmin)) {
-            alert("Invalid role data received. Contact support.");
-            return;
-        }
-
-        // Save to localStorage
+        // Save user to localStorage
         localStorage.setItem("user", JSON.stringify(result));
 
-        // Redirect based on role
-        if (isAdmin === 1) {
-            console.log("Redirecting to: dashboard.html");
+        // ✅ Redirect based on role
+        if (isAdmin) {
             window.location.href = "dashboard.html";
         } else {
-            console.log("Redirecting to: products.html");
             window.location.href = "products.html";
         }
 
@@ -48,4 +40,3 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         alert("Network or server error. Try again later.");
     }
 });
-
