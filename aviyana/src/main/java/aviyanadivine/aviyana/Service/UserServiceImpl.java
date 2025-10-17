@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService{
         BeanUtils.copyProperties(user,user1);
         String encryptedPassword=passwordEncoder.encode(user1.getPassword());
         user1.setPassword(encryptedPassword);
+        user1.setAdmin(false);
         userInfoRepository.save(user1);
         return "User Added Successfully";
     }
