@@ -218,13 +218,18 @@ searchInput.addEventListener("input", () => {
   filterAndRender(); // Apply filters
 });
 
-});
 
 
 document.getElementById("sortProducts").addEventListener("change",()=>{
 
 filterAndRender();
 });
+
+
+
+});
+
+
 
 
 
