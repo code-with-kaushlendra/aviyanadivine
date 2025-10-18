@@ -38,23 +38,17 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
-        Optional<User> found = userInfoRepository.findByEmail(user.getEmail());
+        User dbUser = userService.loginUser(user);
 
-        if (found.isPresent()) {
-            User dbUser = found.get();
-            boolean passwordMatch = passwordEncoder.matches(user.getPassword(), dbUser.getPassword());
+        if (dbUser != null) {
+            int isAdmin = dbUser.isAdmin() ? 1 : 0;
 
-            if (passwordMatch) {
-                int isAdmin = dbUser.isAdmin() ? 1 : 0;
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Login successful");
+            response.put("is_admin", isAdmin);
+            response.put("id", dbUser.getId());
 
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Login successful");
-                System.out.println(isAdmin);
-                response.put("is_admin", isAdmin);
-                response.put("id", dbUser.getId());
-
-                return ResponseEntity.ok(response);
-            }
+            return ResponseEntity.ok(response);
         }
 
         // Login failed
@@ -62,5 +56,6 @@ public class UserController {
         error.put("message", "Invalid email or password");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
+
 
 }

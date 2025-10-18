@@ -30,26 +30,22 @@ public class UserServiceImpl implements UserService{
         return "User Added Successfully";
     }
 
-    public boolean loginUser(User user) {
+    @Override
+    public User loginUser(User user) {
         Optional<User> found = userInfoRepository.findByEmail(user.getEmail());
 
         if (found.isPresent()) {
             User dbUser = found.get();
+            boolean passwordMatch = passwordEncoder.matches(user.getPassword(), dbUser.getPassword());
 
-            // ✅ ONLY allow users (non-admin)
-            if (!dbUser.isAdmin()) {
-                return passwordEncoder.matches(user.getPassword(), dbUser.getPassword());
+            if (passwordMatch) {
+                return dbUser; // ✅ return user if password matches
             }
-            if (dbUser.isAdmin()) {
-                return passwordEncoder.matches(user.getPassword(), dbUser.getPassword());
-            }
-
-            // ❌ If admin tries user login
-            throw new RuntimeException("User Does Not exist");
         }
 
-        return false;
+        return null;
     }
+
 
     @Override
     public Boolean getUserRole(String email) {

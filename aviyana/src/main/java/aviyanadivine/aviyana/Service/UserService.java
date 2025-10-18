@@ -5,7 +5,7 @@ import aviyanadivine.aviyana.Entity.User;
 public interface UserService {
     String createUser(User user);
 
-    boolean loginUser(User user);
+    User loginUser(User user);
 
     Object getUserRole(String email);
 }
