@@ -663,3 +663,17 @@ body {
     font-size: 2rem;
   }
 }
+
+.footer-links {
+  text-align: center;
+  margin-top: 15px;
+}
+.footer-links a {
+  color: #fff;  /* white links for dark footer */
+  text-decoration: none;
+  margin: 0 5px;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
