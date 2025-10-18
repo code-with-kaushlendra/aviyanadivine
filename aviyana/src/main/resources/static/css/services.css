@@ -311,6 +311,9 @@ color: white;
 .step-card p {
   color: #666;
   line-height: 1.6;
+    margin: 0 auto;
+    max-width: 90%;
+    text-align: center;
 }
 
 /* Become Provider */
