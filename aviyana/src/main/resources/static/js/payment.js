@@ -23,7 +23,7 @@ document.getElementById("payBtn").addEventListener("click", async function () {
 
     // Step 2: Open Razorpay Checkout
     const options = {
-      key: "rzp_test_RTgoh4futOXBLA", // ⚠️ Replace with your test key ID
+      key: "rzp_live_RUv2nx9Eg3xoQf", // ⚠️ Replace with your test key ID
       amount: orderData.amount,
       currency: orderData.currency,
       name: "Aviyana Divine",
