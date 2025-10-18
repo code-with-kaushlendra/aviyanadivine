@@ -107,6 +107,26 @@ function filterAndRender() {
     );
   }
 
+    // Sort products
+    const sortValue = document.getElementById("sortProducts").value;
+    switch (sortValue) {
+      case "price-low":
+        filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
+        break;
+      case "price-high":
+        filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case "name":
+        filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+        break;
+      case "newest":
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      default:
+        // Do nothing for 'featured'
+        break;
+    }
+
   renderProducts(filtered);
 }
 
@@ -198,6 +218,12 @@ searchInput.addEventListener("input", () => {
   filterAndRender(); // Apply filters
 });
 
+});
+
+
+document.getElementById("sortProducts").addEventListener("change",()=>{
+
+filterAndRender();
 });
 
 
