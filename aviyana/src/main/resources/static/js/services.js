@@ -95,7 +95,7 @@ function bookService(serviceData) {
 
     // Redirect to dashboard after 2 seconds
     setTimeout(() => {
-      window.location.href = "dashboard.html"
+      window.location.href = "checkout.html"
     }, 2000)
   }, 1500)
 }
