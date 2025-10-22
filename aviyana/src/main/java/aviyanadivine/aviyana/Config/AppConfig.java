@@ -57,7 +57,8 @@ public class AppConfig {
                                 "/api/products/**",
                                 "/api/shipping/**",
                                 "/api/payment/**",
-                                "/api/admin"
+                                "/api/admin",
+                                "/api/auth/*"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

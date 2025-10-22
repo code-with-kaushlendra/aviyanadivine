@@ -8,4 +8,7 @@ public interface UserService {
     User loginUser(User user);
 
     Object getUserRole(String email);
+
+    boolean sendResetLink(String email);
+    boolean resetPassword(String token , String newPassword);
 }
