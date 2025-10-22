@@ -29,7 +29,7 @@ public class PasswordResetToken {
     public PasswordResetToken(String token, User user, LocalDateTime expiryDate) {
         this.token = token;
         this.user = user;
-        this.expiry = expiry;
+        this.expiry = expiryDate;
     }
 
 
