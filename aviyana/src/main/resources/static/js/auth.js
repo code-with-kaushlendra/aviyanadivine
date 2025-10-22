@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document
+  document
     .getElementById("forgotPasswordForm")
     .addEventListener("submit", function (e) {
       e.preventDefault();
@@ -13,22 +13,23 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         body: JSON.stringify({ email }),
       })
-        .then(async (response) => {
-          if (!response.ok) {
-            // Try to parse error response if it's JSON
-            let errorMsg = "Something went wrong!";
-            try {
-              const errorData = await response.json();
-              errorMsg = errorData.message || errorMsg;
-            } catch {
-              // If it's not JSON (or empty body), fall back to text
-              const errorText = await response.text();
-              if (errorText) errorMsg = errorText;
-            }
-            throw new Error(errorMsg);
-          }
-
-          return response.json(); // Only parse JSON if response is ok
+        .then((response) => {
+          return response
+            .json()
+            .then((data) => {
+              // Now we safely read the body once
+              if (!response.ok) {
+                throw new Error(data.message || "Something went wrong!");
+              }
+              return data;
+            })
+            .catch(() => {
+              // Body is not JSON or empty
+              if (!response.ok) {
+                throw new Error(`Error ${response.status}: ${response.statusText}`);
+              }
+              throw new Error("Unexpected error format.");
+            });
         })
         .then((data) => {
           if (data.success) {
