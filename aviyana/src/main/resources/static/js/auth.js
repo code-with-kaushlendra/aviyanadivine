@@ -10,7 +10,7 @@ const form=document.getElementById("forgotPasswordForm").addEventListener("submi
  headers:{
  "Content-Type":"application/json",
  },
- body:JSON.stringify({email:email})
+ body:JSON.stringify({email})
  })
  .then(response=> response.json())
  .then(data=>{

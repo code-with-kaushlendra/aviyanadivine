@@ -58,7 +58,8 @@ public class AppConfig {
                                 "/api/shipping/**",
                                 "/api/payment/**",
                                 "/api/admin",
-                                "/api/auth/*"
+                                "/api/auth/forgotpassword",
+                                "/api/auth/reset-password"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
